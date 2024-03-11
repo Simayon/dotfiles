@@ -49,6 +49,7 @@ in {
     plugins = {
       barbecue.enable = true;
       gitsigns.enable = true;
+      noice.enable = true;
       telescope = {
 	enable = true;
 	keymaps = {
@@ -201,6 +202,23 @@ in {
         key = "<S-Tab>";
         action = ":bprev<CR>";
         options.silent = false;
+      }
+      {
+        key = "<Leader>y"; 
+        action = "\"+y";  #yank into PRIMARY register
+        options.silent = true;
+      }
+      {
+        key = "<Leader>pp";
+        action = "\"+p";  #paste from PRIMARY register
+        options.silent = true;
+      }
+      {
+        mode = "n";
+        key = "<Leader>ph";
+        action = ":Gitsigns preview_hunk<CR>";
+        options.noremap = true;
+        options.silent = true;
       }
     ];
 

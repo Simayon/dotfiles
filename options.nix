@@ -4,18 +4,18 @@
 
 let
   # THINGS YOU NEED TO CHANGE
-  username = "zaney";
-  hostname = "hyprnix";
+  username = "wacka";
+  hostname = "spaceship";
   userHome = "/home/${username}";
   flakeDir = "${userHome}/zaneyos";
-  waybarStyle = "simplebar"; # simplebar, slickbar, or default
+  waybarStyle = "slickbar"; # simplebar, slickbar, or default
 in {
   # User Variables
-  username = "zaney";
-  hostname = "hyprnix";
-  gitUsername = "Tyler Kelley";
-  gitEmail = "tylerzanekelley@gmail.com";
-  theme = "atelier-cave";
+  username = "wacka";
+  hostname = "spaceship";
+  gitUsername = "Simayon Thampi";
+  gitEmail = "simayonthampi@gmail.com";
+  theme = "catppuccin-mocha";
   slickbar = if waybarStyle == "slickbar" then true else false;
   simplebar = if waybarStyle == "simplebar" then true else false;
   bar-number = true; # Enable / Disable Workspace Numbers In Waybar
@@ -37,14 +37,14 @@ in {
   theSecondKBDLayout = "de";
   theKBDVariant = "";
   theLCVariables = "en_US.UTF-8";
-  theTimezone = "America/Chicago";
+  theTimezone = "Asia/Kolkata";
   theShell = "bash"; # Possible options: bash, zsh
   theKernel = "zen"; # Possible options: default, latest, lqx, xanmod, zen
   sdl-videodriver = "x11"; # Either x11 or wayland ONLY. Games might require x11 set here
   # For Hybrid Systems intel-nvidia
   # Should Be Used As gpuType
   cpuType = "intel";
-  gpuType = "amd";
+  gpuType = "nvidia";
 
   # Nvidia Hybrid Devices
   # ONLY NEEDED FOR HYBRID
