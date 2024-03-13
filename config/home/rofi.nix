@@ -4,128 +4,133 @@ let
   palette = config.colorScheme.palette;
 in {
   home.file.".config/rofi/config.rasi".text = ''
-    @theme "/dev/null"
+  @theme "/dev/null"
+  * {
+    bg-col:  #${palette.base00};
+    bg-col-light: #1e1e2e;
+    border-col: #1e1e2e;
+    selected-col: #1e1e2e;
+    blue: #89b4fa;
+    fg-col: #cdd6f4;
+    fg-col2: #f38ba8;
+    grey: #6c7086;
 
-    * {
-      bg: #${palette.base00};
-      background-color: @bg;
-    }
+    width: 600;
+    font: "JetBrainsMono Nerd Font 14";
+  }
 
-    configuration {
-      modi:		    "run,filebrowser,drun";
-      show-icons:	    true;
-      icon-theme:	    "Papirus";
-      location:		    0;
-      font:		    "JetBrains Nerd Font 16";	
-      drun-display-format:  "{icon} {name}";
-      display-drun:	    "   Apps ";
-      display-run:	    "   Run ";
-      display-filebrowser:  "   File ";
-    }
+  element-text, element-icon , mode-switcher {
+    background-color: inherit;
+    text-color:       inherit;
+  }
 
-    window { 
-      width: 45%;
-      transparency: "real";
-      orientation: vertical;
-      border: 2px ;
-      border-color: #${palette.base0F};
-      border-radius: 10px;
-    }
+  window {
+    height: 360px;
+    border: 3px;
+    border-color: #${palette.base0F};
+    background-color: @bg-col;
+  }
 
-    mainbox {
-      children: [ inputbar, listview, mode-switcher ];
-    }
+  mainbox {
+    background-color: @bg-col;
+  }
 
-    // ELEMENT
-    // -----------------------------------
+  inputbar {
+    children: [prompt,entry];
+    background-color: @bg-col;
+    border-radius: 5px;
+    padding: 2px;
+  }
 
-    element {
-      padding: 8 14;
-      text-color: #${palette.base05};
-      border-radius: 5px;
-    }
+  prompt {
+    background-color: @blue;
+    padding: 6px;
+    text-color: @bg-col;
+    border-radius: 3px;
+    margin: 20px 0px 0px 20px;
+  }
 
-    element selected {
-      text-color: #${palette.base01};
-      background-color: #${palette.base0C};
-    }
+  textbox-prompt-colon {
+    expand: false;
+    str: ":";
+  }
 
-    element-text {
-      background-color: inherit;
-      text-color: inherit;
-    }
+  entry {
+    padding: 6px;
+    margin: 20px 0px 0px 10px;
+    text-color: @fg-col;
+    background-color: @bg-col;
+  }
 
-    element-icon {
-      size: 24 px;
-      background-color: inherit;
-      padding: 0 6 0 0;
-      alignment: vertical;
-    }
+  listview {
+    border: 0px 0px 0px;
+    padding: 6px 0px 0px;
+    margin: 10px 0px 0px 20px;
+    columns: 2;
+    lines: 5;
+    background-color: @bg-col;
+  }
 
-    listview {
-      columns: 2;
-      lines: 9;
-      padding: 8 0;
-      fixed-height: true;
-      fixed-columns: true;
-      fixed-lines: true;
-      border: 0 10 6 10;
-    }
+  element {
+    padding: 5px;
+    background-color: @bg-col;
+    text-color: @fg-col  ;
+  }
 
-    // INPUT BAR 
-    //------------------------------------------------
+  element-icon {
+    size: 25px;
+  }
 
-    entry {
-      text-color: #${palette.base05};
-      padding: 10 10 0 0;
-      margin: 0 -2 0 0;
-    }
+  element selected {
+    background-color:  @selected-col ;
+    text-color: @fg-col2  ;
+  }
 
-    inputbar {
-      background-image: url("~/.config/rofi/rofi.jpg", width);
-      padding: 180 0 0;
-      margin: 0 0 0 0;
-    } 
+  mode-switcher {
+    spacing: 0;
+  }
 
-    prompt {
-      text-color: #${palette.base0D};
-      padding: 10 6 0 10;
-      margin: 0 -2 0 0;
-    }
+  button {
+    padding: 10px;
+    background-color: @bg-col-light;
+    text-color: @grey;
+    vertical-align: 0.5; 
+    horizontal-align: 0.5;
+  }
 
-    // Mode Switcher
-    //------------------------------------------------
+  button selected {
+    background-color: @bg-col;
+    text-color: @blue;
+  }
 
-    mode-switcher {
-      border-color:   #${palette.base0F};
-      spacing:	      0;
-    }
+  message {
+    background-color: @bg-col-light;
+    margin: 2px;
+    padding: 2px;
+    border-radius: 5px;
+  }
 
-    button {
-      padding:	      10px;
-      background-color: @bg;
-      text-color:	      #${palette.base01};
-      vertical-align:   0.5; 
-      horizontal-align: 0.5;
-    }
+  textbox {
+    padding: 6px;
+    margin: 20px 0px 0px 20px;
+    text-color: @blue;
+    background-color: @bg-col-light;
+  }
+  configuration{
+    modi: "run,drun,window";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    display-window: " 﩯  Window";
+    display-Network: " 󰤨  Network";
+    sidebar-mode: true;
+  }
 
-    button selected {
-      background-color: @bg;
-      text-color: #${palette.base0F};
-    }
-
-    message {
-      background-color: @bg;
-      margin: 2px;
-      padding: 2px;
-      border-radius: 5px;
-    }
-
-    textbox {
-      padding: 6px;
-      margin: 20px 0px 0px 20px;
-      text-color: #${palette.base0F};
-      background-color: @bg;
-    }
   '';
 }
