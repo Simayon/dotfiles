@@ -1,13 +1,10 @@
-# PLEASE READ THE WIKI FOR DETERMINING
-# WHAT TO PUT HERE AS OPTIONS. 
-# https://gitlab.com/Zaney/zaneyos/-/wikis/Setting-Options
 
 let
   # THINGS YOU NEED TO CHANGE
   username = "wacka";
   hostname = "spaceship";
   userHome = "/home/${username}";
-  flakeDir = "${userHome}/zaneyos";
+  flakeDir = "${userHome}/dotfiles";
   waybarStyle = "slickbar"; # simplebar, slickbar, or default
 in {
   # User Variables
@@ -22,12 +19,12 @@ in {
   borderAnim = true;
   browser = "firefox";
   wallpaperGit = "https://gitlab.com/Zaney/my-wallpapers.git"; # This will give you my wallpapers
-  # ^ (use as is or replace with your own repo - removing will break the wallsetter script) 
+  # ^ (use as is or replace with your own repo - removing will break the wallsetter script)
   wallpaperDir = "${userHome}/Pictures/Wallpapers";
   screenshotDir = "${userHome}/Pictures/Screenshots";
   flakeDir = "${flakeDir}";
-  flakePrev = "${userHome}/.zaneyos-previous";
-  flakeBackup = "${userHome}/.zaneyos-backup";
+  flakePrev = "${userHome}/.dotfiles-previous";
+  flakeBackup = "${userHome}/.dotfiles-backup";
   terminal = "kitty"; # This sets the terminal that is used by the hyprland terminal keybinding
 
   # System Settings
@@ -48,7 +45,7 @@ in {
 
   # Nvidia Hybrid Devices
   # ONLY NEEDED FOR HYBRID
-  # SYSTEMS! 
+  # SYSTEMS!
   intel-bus-id = "PCI:0:2:0";
   nvidia-bus-id = "PCI:14:0:0";
 
@@ -82,7 +79,7 @@ in {
 
   # Enable Python & PyCharm
   python = false;
-  
+
   # Enable SyncThing
   syncthing = false;
 
