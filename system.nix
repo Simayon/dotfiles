@@ -1,12 +1,17 @@
-{ inputs, config, pkgs,
-  username, hostname, ... }:
+{ inputs, config, pkgs, username, hostname, ... }:
 
 let 
   inherit (import ./options.nix) 
-    theLocale theTimezone gitUsername
-    theShell wallpaperDir wallpaperGit
-    theLCVariables theKBDLayout flakeDir
-    theme;
+  theLocale
+  theTimezone
+  gitUsername
+  theShell
+  wallpaperDir
+  wallpaperGit
+  theLCVariables
+  theKBDLayout
+  flakeDir
+   theme;
 in {
   imports =
     [
