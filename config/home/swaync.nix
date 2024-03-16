@@ -98,10 +98,6 @@ in {
                         "label": "🌏",
                         "command": "firefox"
                     },
-                    {
-                        "label": "📹",
-                        "command": "obs"
-                    }
                 ]
             }
     }

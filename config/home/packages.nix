@@ -20,7 +20,6 @@ in {
     transmission-gtk 
     mpv
     gimp 
-    obs-studio 
     rustup 
     audacity 
     pavucontrol 

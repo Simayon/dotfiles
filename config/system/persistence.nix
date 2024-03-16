@@ -29,7 +29,6 @@ in
 	".cache"
 	".ssh"
 	".config/discord"
-	".config/obs-studio"
 	".steam"
       ];
       files = [
