@@ -1,0 +1,37 @@
+# Commits should follow the format below:
+#
+# [Title:]
+#
+#fix:
+#feat:
+#refactor:
+#docs:
+#build:
+#------------------------------------------------------------
+# <type>: In under 50 characters, description of the commit
+#------------------------------------------------------------
+
+[Brief]:
+
+
+
+
+# ------------------------------------------------------------
+# Explain in detail what was done in this commit and
+# what this is supposed to achieve. Keep this section
+# under 72 characters per line.
+# ------------------------------------------------------------
+[Notes]:
+
+
+
+#------------------------------------------------------------
+# Use this section to add any PR/Ticket numbers that this
+# commit is solving or any co-authors. If none of these apply, # leave it empty.
+#------------------------------------------------------------
+#
+#######################
+# End of Commit Message
+#######################
+#
+#

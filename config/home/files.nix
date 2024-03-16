@@ -18,4 +18,5 @@
     source = ./files/wlogout;
     recursive = true;
   };
+  home.file.".gitmessage".source = ./files/.gitmessage;
 }

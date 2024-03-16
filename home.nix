@@ -1,9 +1,9 @@
 { config, pkgs, inputs, username,
   gtkThemeFromScheme, ... }:
-let 
+let
   inherit (import ./options.nix)
-    gitUsername gitEmail theme browser 
-    wallpaperDir wallpaperGit flakeDir 
+    gitUsername gitEmail theme browser
+    wallpaperDir wallpaperGit flakeDir
     waybarStyle;
 in {
   # Home Manager Settings
@@ -32,6 +32,10 @@ in {
     enable = true;
     userName = "${gitUsername}";
     userEmail = "${gitEmail}";
+    extraConfig = {
+      core.editor = "nvim"; #configura neovim as default editor
+      commit.template = "${config.home.homeDirectory}/.gitmessage"; # Add a cusotm git tempelate file
+    };
   };
 
   # Create XDG Dirs
