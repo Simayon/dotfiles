@@ -63,7 +63,7 @@ in {
 
   # Enable Flatpak & Larger Programs
   distrobox = false;
-  flatpak = false;
+  flatpak = true;
   kdenlive = true;
   blender = true;
 
@@ -81,6 +81,6 @@ in {
   python = false;
 
   # Enable SyncThing
-  syncthing = false;
+  syncthing = true;
 
 }
