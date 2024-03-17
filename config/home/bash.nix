@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let inherit (import ../../options.nix) flakeDir flakePrev 
+let inherit (import ../../options.nix) flakeDir flakePrev
 	     hostname flakeBackup theShell; in
 lib.mkIf (theShell == "bash") {
   # Configure Bash
@@ -36,6 +36,7 @@ lib.mkIf (theShell == "bash") {
       ".."="cd ..";
       neofetch="neofetch --ascii ~/.config/ascii-neofetch";
       lg="lazygit";
+      grep="rg";
     };
   };
 }

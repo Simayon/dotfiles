@@ -11,8 +11,8 @@
     v4l-utils ydotool wl-clipboard socat cowsay lsd lshw
     pkg-config meson hugo gnumake ninja go nodejs symbola
     noto-fonts-color-emoji material-icons brightnessctl
-    toybox virt-viewer swappy ripgrep appimage-run 
-    networkmanagerapplet yad playerctl nh
+    toybox virt-viewer swappy ripgrep appimage-run
+    networkmanagerapplet yad playerctl nh ripgrep
   ];
 
   programs = {
