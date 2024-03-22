@@ -25,23 +25,23 @@ echo "-----"
 
 # Check For Persistence. Backing up current flake files
 # with it enabled is not yet implemented.
-persistState=$(cat zaneyos/hardware.nix | grep persistence | wc -l)
+persistState=$(cat dotfiles/hardware.nix | grep persistence | wc -l)
 if [ $persistState -eq 0 ]; then
   backupname=$(date "+%Y-%m-%d-%H-%M-%S")
-  if [ -d "zaneyos" ]; then
-    echo "ZaneyOS exists, backing up to .config/zaneyos-backups folder."
-    if [ -d ".config/zaneyos-backups" ]; then
-      echo "Moving current version of ZaneyOS to backups folder."
-      mv $HOME/zaneyos .config/zaneyos-backups/$backupname
+  if [ -d "dotfiles" ]; then
+    echo "Dotfiles exists, backing up to .config/dotfiles-backups folder."
+    if [ -d ".config/dotfiles-backups" ]; then
+      echo "Moving current version of Dotfiles to backups folder."
+      mv $HOME/dotfiles .config/dotfiles-backups/$backupname
       sleep 1
     else
-      echo "Creating the backups folder & moving ZaneyOS to it."
-      mkdir -p .config/zaneyos-backups
-      mv $HOME/zaneyos .config/zaneyos-backups/$backupname
+      echo "Creating the backups folder & moving Dotfiles to it."
+      mkdir -p .config/dotfiles-backups
+      mv $HOME/dotfiles .config/dotfiles-backups/$backupname
       sleep 1
     fi
   else
-    echo "Thank you for choosing ZaneyOS."
+    echo "Thank you for choosing Dotfiles."
     echo "I hope you find your time here enjoyable!"
   fi
 fi
@@ -54,9 +54,9 @@ sleep 2
 
 echo "-----"
 
-echo "Cloning & Entering ZaneyOS Repository"
-git clone https://gitlab.com/zaney/zaneyos.git
-cd zaneyos
+echo "Cloning & Entering Dotfiles Repository"
+git clone https://gitlab.com/Simayon/dotfiles.git
+cd dotfiles
 
 echo "-----"
 
@@ -301,9 +301,9 @@ sudo nixos-generate-config --show-hardware-config > hardware.nix
 echo "-----"
 
 # Ask if the user wants to install extra packages then if
-# it's for user or system. 
-userpath="/home/$userName/zaneyos/config/home/packages.nix"
-systempath="/home/$userName/zaneyos/config/system/packages.nix"
+# it's for user or system.
+userpath="/home/$userName/dotfiles/config/home/packages.nix"
+systempath="/home/$userName/dotfiles/config/system/packages.nix"
 insertedUserProgram=false
 insertedSystemProgram=false
 while true; do
@@ -345,18 +345,18 @@ while true; do
   esac
 done
 
-echo "Now Going To Build ZaneyOS, 🤞"
-NIX_CONFIG="experimental-features = nix-command flakes" 
+echo "Now Going To Build Dotfiles, 🤞"
+NIX_CONFIG="experimental-features = nix-command flakes"
 sudo nixos-rebuild switch --flake .#$hostName
 
 if [ $userName != $installusername ]; then
   cd
-  cp -r zaneyos /home/$userName/
-  sudo chown -R $userName:users /home/$userName/zaneyos
-  echo "Ensuring ZaneyOS repository is in your users HOME directory."
+  cp -r dotfiles /home/$userName/
+  sudo chown -R $userName:users /home/$userName/dotfiles
+  echo "Ensuring Dotfiles repository is in your users HOME directory."
 fi
 
 echo "-----"
 
-echo "ZaneyOS Has Been Installed!"
+echo "Dotfiles Has Been Installed!"
 echo "Please use responsibly."
