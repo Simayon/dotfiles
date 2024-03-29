@@ -55,7 +55,7 @@ sleep 2
 echo "-----"
 
 echo "Cloning & Entering Dotfiles Repository"
-git clone https://gitlab.com/Simayon/dotfiles.git
+git clone git@github.com:Simayon/dotfiles.git
 cd dotfiles
 
 echo "-----"
