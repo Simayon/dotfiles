@@ -1,0 +1,3 @@
+[submodule "dot-neovim"]
+	path = dot-neovim
+	url = ./dot-neovim
