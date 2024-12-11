@@ -1,7 +1,8 @@
 name: Update Neovim Submodule
 
 on:
-  push:
+  repository_dispatch:
+    types: [update-neovim]  # Custom event type for triggering the workflow
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
   workflow_dispatch:  # Allow manual trigger
