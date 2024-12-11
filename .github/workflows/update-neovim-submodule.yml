@@ -1,0 +1,36 @@
+name: Update Neovim Submodule
+
+on:
+  push:
+    paths:
+      - 'dot-neovim/**'
+
+jobs:
+  update-submodule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Git config
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Check and update submodule
+        run: |
+          cd dot-neovim
+          CURRENT_SHA=$(git rev-parse HEAD)
+          git fetch origin
+          LATEST_SHA=$(git rev-parse origin/HEAD)
+          
+          if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
+            cd ..
+            git submodule update --remote dot-neovim
+            git add dot-neovim
+            git commit -m "chore: update neovim submodule to latest commit"
+            git push
+          fi
