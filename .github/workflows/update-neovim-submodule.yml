@@ -2,12 +2,15 @@ name: Update Neovim Submodule
 
 on:
   push:
-    paths:
-      - 'dot-neovim/**'
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   update-submodule:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,15 +25,24 @@ jobs:
 
       - name: Check and update submodule
         run: |
+          # Initialize and update the submodule
+          git submodule init
+          git submodule update
+          
+          # Go to submodule directory and fetch latest changes
           cd dot-neovim
-          CURRENT_SHA=$(git rev-parse HEAD)
           git fetch origin
-          LATEST_SHA=$(git rev-parse origin/HEAD)
+          SUBMODULE_DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          CURRENT_SHA=$(git rev-parse HEAD)
+          LATEST_SHA=$(git rev-parse origin/$SUBMODULE_DEFAULT_BRANCH)
           
           if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
             cd ..
             git submodule update --remote dot-neovim
             git add dot-neovim
-            git commit -m "chore: update neovim submodule to latest commit"
+            SUBMODULE_SHORT_SHA=$(cd dot-neovim && git rev-parse --short HEAD)
+            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}"
             git push
+          else
+            echo "Submodule is already up to date"
           fi
