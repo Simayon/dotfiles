@@ -1,3 +1,3 @@
 [submodule "dot-neovim"]
   path = dot-neovim
-  url = https://github.com/Simayon/dot-neovim.git
+  url = git@github.com:Simayon/neovim-dotfiles.git
