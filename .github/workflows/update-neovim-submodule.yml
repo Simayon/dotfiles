@@ -1,10 +1,7 @@
 name: Update Neovim Submodule
-
 on:
   repository_dispatch:
-    types: [update-neovim]  # Custom event type for triggering the workflow
-  schedule:
-    - cron: '0 */6 * * *'  # Run every 6 hours
+    types: [neovim-updated]
   workflow_dispatch:  # Allow manual trigger
 
 jobs:
@@ -29,14 +26,14 @@ jobs:
           # Initialize and update the submodule
           git submodule init
           git submodule update
-          
+
           # Go to submodule directory and fetch latest changes
           cd dot-neovim
           git fetch origin
           SUBMODULE_DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
           CURRENT_SHA=$(git rev-parse HEAD)
           LATEST_SHA=$(git rev-parse origin/$SUBMODULE_DEFAULT_BRANCH)
-          
+
           if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
             cd ..
             git submodule update --remote dot-neovim
@@ -47,3 +44,4 @@ jobs:
           else
             echo "Submodule is already up to date"
           fi
+
