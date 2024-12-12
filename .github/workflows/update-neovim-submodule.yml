@@ -34,12 +34,19 @@ jobs:
           CURRENT_SHA=$(git rev-parse HEAD)
           LATEST_SHA=$(git rev-parse origin/$SUBMODULE_DEFAULT_BRANCH)
 
+          echo "Current submodule SHA: $CURRENT_SHA"
+          echo "Latest submodule SHA: $LATEST_SHA"
+
+          # Fetch and display the Git log
+          echo "Fetching git log for the submodule..."
+          GIT_LOG=$(git log --oneline -n 10)
+
           if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
             cd ..
             git submodule update --remote dot-neovim
             git add dot-neovim
             SUBMODULE_SHORT_SHA=$(cd dot-neovim && git rev-parse --short HEAD)
-            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}"
+            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}\n\nNotes:\n${GIT_LOG}"
             git push
           else
             echo "Submodule is already up to date"
