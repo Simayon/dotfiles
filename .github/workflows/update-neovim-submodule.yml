@@ -46,7 +46,16 @@ jobs:
             git submodule update --remote dot-neovim
             git add dot-neovim
             SUBMODULE_SHORT_SHA=$(cd dot-neovim && git rev-parse --short HEAD)
-            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}\n\nNotes:\n${GIT_LOG}"
+
+            # Capture the latest commit message from the submodule
+            LATEST_COMMIT_MESSAGE=$(cd dot-neovim && git log -1 --pretty=%B)
+
+            # Commit with the new message
+            # Commit with the new message
+            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}
+
+            Triggered by commit:
+            ${LATEST_COMMIT_MESSAGE}"
             git push
           else
             echo "Submodule is already up to date"
