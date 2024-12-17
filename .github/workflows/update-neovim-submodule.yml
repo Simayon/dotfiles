@@ -45,17 +45,19 @@ jobs:
             cd ..
             git submodule update --remote dot-neovim
             git add dot-neovim
+            # Capture the commit information from the submodule
             SUBMODULE_SHORT_SHA=$(cd dot-neovim && git rev-parse --short HEAD)
+            SUBMODULE_FULL_SHA=$(cd dot-neovim && git rev-parse HEAD)
+            REPO_URL=$(cd dot-neovim && git config --get remote.origin.url | sed 's/\.git$//' | sed 's|git@github.com:|https://github.com/|')
+            LATEST_COMMIT_MESSAGE=$(cd dot-neovim && git log -1 --pretty=%B --oneline)
 
-            # Capture the latest commit message from the submodule
-            LATEST_COMMIT_MESSAGE=$(cd dot-neovim && git log -1 --pretty=%B)
-
-            # Commit with the new message
             # Commit with the new message
             git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}
 
             Triggered by commit:
-            ${LATEST_COMMIT_MESSAGE}"
+            ${LATEST_COMMIT_MESSAGE}
+            
+            View changes: ${REPO_URL}/commit/${SUBMODULE_FULL_SHA}"
             git push
           else
             echo "Submodule is already up to date"
