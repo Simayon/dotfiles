@@ -1,22 +1,33 @@
-.PHONY: all git-setup clean
+.PHONY: all git-setup nvim-setup tmux-setup clean help
 
-all: git-setup
+all: git-setup nvim-setup tmux-setup
 
 git-setup:
-	@echo "Installing git-delta..."
-	@cargo install git-delta
-	@echo "Configuring git with delta settings..."
-	@git config --global core.pager delta
-	@git config --global interactive.diffFilter 'delta --color-only'
-	@git config --global delta.navigate true
-	@git config --global merge.conflictStyle zdiff3
+	@echo "Setting up Git configuration..."
+	@chmod +x ./config-git.sh
+	@./config-git.sh
+
+nvim-setup:
+	@echo "Setting up Neovim configuration..."
+	@chmod +x ./config-nvim.sh
+	@./config-nvim.sh
+
+tmux-setup:
+	@echo "Setting up Tmux configuration..."
+	@chmod +x ./config-tmux.sh
+	@./config-tmux.sh
 
 clean:
-	@echo "Cleaning up (no specific cleanup needed for git-delta)"
+	@echo "Cleaning up dotfiles symlinks..."
+	@rm -f ~/.gitconfig
+	@rm -f ~/.config/nvim/init.lua
+	@rm -f ~/.tmux.conf
 
 help:
-	@echo "Targets:"
-	@echo "  all       : Setup system (default)"
-	@echo "  git-setup : Setup git configuration"
-	@echo "  clean     : Cleanup (no-op)"
-	@echo "  help      : Show this help message"
+	@echo "Dotfiles Setup Targets:"
+	@echo "  all        : Setup complete system (git, neovim, tmux)"
+	@echo "  git-setup  : Setup git configuration with delta"
+	@echo "  nvim-setup : Install and configure Neovim"
+	@echo "  tmux-setup : Install and configure Tmux"
+	@echo "  clean      : Remove dotfile symlinks"
+	@echo "  help       : Show this help message"
