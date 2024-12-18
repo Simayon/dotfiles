@@ -77,3 +77,5 @@
 # Include work-specific configuration if in work directory
 [includeIf "gitdir:~/Projects/WORK/"]
 	path = ~/.gitconfig-work
+[commit]
+	template = ~/.gitmessage

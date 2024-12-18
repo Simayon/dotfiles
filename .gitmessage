@@ -1,0 +1,53 @@
+########################
+# Commit Message Format
+########################
+
+# <type>(): <short description>
+# |        |
+# |        +-> Summary in present tense (imperative mood)
+# |
+# +-------> Type: feat|fix|refactor|docs|build|style|test|chore|perf|ci|revert
+
+# [optional body]
+
+# [optional footer]
+
+########################
+# Available Types
+########################
+# feat     : New feature
+# fix      : Bug fix
+# refactor : Code refactoring
+# style    : Formatting, semicolons, etc. (no code change)
+# docs     : Documentation changes
+# test     : Adding/refactoring tests (no production code)
+# chore    : Grunt tasks, dependencies, etc. (no production code)
+# perf     : Performance improvements
+# ci       : CI/CD related changes
+# build    : Build system or external dependencies
+# revert   : Revert to a previous commit
+
+########################
+# Imperative Verbs Guide
+########################
+# Add      : Create a capability (feature, test, dependency)
+# Drop     : Delete a capability (feature, test, dependency)
+# Fix      : Fix an issue (bug, typo, accident, misstatement)
+# Bump     : Increase version of something (dependency)
+# Make     : Change build process, tooling, or infrastructure
+# Start    : Begin doing something (create feature flag)
+# Stop     : End doing something (remove feature flag)
+# Optimize : Performance improvement
+# Document : Documentation only changes
+# Refactor : Code refactoring only
+# Reformat : Formatting only (indentation, spaces, etc)
+# Rephrase : Text only changes (comments, docs)
+
+########################
+# Examples
+########################
+# feat(auth): add email authentication
+# fix(db): resolve memory leak in connection pool
+# docs(api): update endpoint documentation
+# style(lint): apply prettier formatting
+# refactor(core): simplify error handling logic
