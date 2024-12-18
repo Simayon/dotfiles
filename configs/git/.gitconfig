@@ -1,81 +1,85 @@
 # Core settings
 [core]
-	editor = nvim
-	autocrlf = input
-	eol = lf
-	pager = delta
+    editor = nvim
+    autocrlf = input
+    eol = lf
+    pager = delta
 
 # Delta integration
 [interactive]
-	diffFilter = delta --color-only
+    diffFilter = delta --color-only
 
 [delta]
-	navigate = true
+    navigate = true
 
 # Merge and diff settings
 [merge]
-	conflictStyle = zdiff3
+    conflictStyle = zdiff3
 
 # Template settings
 [init]
-	templatedir = ~/.git-templates
+    templatedir = ~/.git-templates
 
 # Rebase settings
 [rebase]
-	instructionFormat = (%an <%ae>) %s
+    instructionFormat = (%an <%ae>) %s
 
 # Aliases
 [alias]
-	# Interactive log browser with preview
-	flog = !git log | fzf --ansi --no-sort \
-		--preview "echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % git show % --color=always" \
-		--preview-window=right:50%:wrap --height 100% \
-		--bind "enter:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"git show % | nvim -c \\\"setlocal buftype=nofile bufhidden=wipe noswapfile nowrap\\\" -c \\\"nnoremap <buffer> q :q!<CR>\"\")" \
-		--bind "ctrl-e:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"gh browse %\")"
+    # Interactive log browser with preview
+    flog = !git log | fzf --ansi --no-sort \
+        --preview "echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % git show % --color=always" \
+        --preview-window=right:50%:wrap --height 100% \
+        --bind "enter:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"git show % | nvim -c \\\"setlocal buftype=nofile bufhidden=wipe noswapfile nowrap\\\" -c \\\"nnoremap <buffer> q :q!<CR>\"\")" \
+        --bind "ctrl-e:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"gh browse %\")"
 
-	# Pretty log output
-	ol = log --pretty="%C(white dim)%ad %C(reset)%C(Cyan)(%cd)%C(Green)(%cr)%C(reset)%x09 %C(red)%an%C(auto), %C(white dim)%cn%C(auto): %C(reset)%C(Yellow)%h %C(white)%s %C(auto)%d%C(reset)" --graph --decorate --date=local
+    # Pretty log output
+    ol = log --pretty="%C(white dim)%ad %C(reset)%C(Cyan)(%cd)%C(Green)(%cr)%C(reset)%x09 %C(red)%an%C(auto), %C(white dim)%cn%C(auto): %C(reset)%C(Yellow)%h %C(white)%s %C(auto)%d%C(reset)" --graph --decorate --date=local
 
-	# Navigate through commit history
-	next = "!f() { \
-		in=${1:-master}; \
-		next=$(git log --reverse --ancestry-path HEAD..$in --pretty=%H | head -n1); \
-		branch=$(git rev-parse $in); \
-		head=$(git rev-parse HEAD); \
-		if [ \"$branch\" == \"$head\" ]; then \
-			echo \"Already on $in\"; \
-		elif [ \"$next\" == \"\" ]; then \
-			echo \"HEAD is not in the ancestry path of $in\"; \
-		elif [ \"$next\" == \"$branch\" ]; then \
-			git switch $in; \
-		else \
-			git switch --detach $next; \
-		fi \
-	}; f"
+    # Navigate through commit history
+    next = "!f() { \
+        in=${1:-master}; \
+        next=$(git log --reverse --ancestry-path HEAD..$in --pretty=%H | head -n1); \
+        branch=$(git rev-parse $in); \
+        head=$(git rev-parse HEAD); \
+        if [ \"$branch\" == \"$head\" ]; then \
+            echo \"Already on $in\"; \
+        elif [ \"$next\" == \"\" ]; then \
+            echo \"HEAD is not in the ancestry path of $in\"; \
+        elif [ \"$next\" == \"$branch\" ]; then \
+            git switch $in; \
+        else \
+            git switch --detach $next; \
+        fi \
+    }; f"
 
-	prev = "!f() { \
-		in=${1:-master}; \
-		prev=$(git log --ancestry-path $in..HEAD --pretty=%H | tail -n1); \
-		branch=$(git rev-parse $in); \
-		head=$(git rev-parse HEAD); \
-		if [ \"$branch\" == \"$head\" ]; then \
-			echo \"Already on $in\"; \
-		elif [ \"$prev\" == \"\" ]; then \
-			echo \"HEAD is not in the ancestry path of $in\"; \
-		elif [ \"$prev\" == \"$branch\" ]; then \
-			git switch $in; \
-		else \
-			git switch --detach $prev; \
-		fi \
-	}; f"
+    prev = "!f() { \
+        in=${1:-master}; \
+        prev=$(git log --ancestry-path $in..HEAD --pretty=%H | tail -n1); \
+        branch=$(git rev-parse $in); \
+        head=$(git rev-parse HEAD); \
+        if [ \"$branch\" == \"$head\" ]; then \
+            echo \"Already on $in\"; \
+        elif [ \"$prev\" == \"\" ]; then \
+            echo \"HEAD is not in the ancestry path of $in\"; \
+        elif [ \"$prev\" == \"$branch\" ]; then \
+            git switch $in; \
+        else \
+            git switch --detach $prev; \
+        fi \
+    }; f"
+
+# Conditional includes based on directory
+[includeIf "gitdir:~/Projects/PERSONAL/"]
+    path = ~/.gitconfig-personal
+
+[includeIf "gitdir:~/Projects/WORK/"]
+    path = ~/.gitconfig-work
 
 # Personal configuration
 [user]
-	name = Simayon Thampi
-	email = simayonthampi@gmail.com
+    name = Simayon Thampi
+    email = simayonthampi@gmail.com
 
-# Include work-specific configuration if in work directory
-[includeIf "gitdir:~/Projects/WORK/"]
-	path = ~/.gitconfig-work
 [commit]
-	template = ~/.gitmessage
+    template = ~/.gitmessage

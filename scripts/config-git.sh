@@ -30,8 +30,12 @@ check_dependencies() {
 setup_git_config() {
     log "Setting up Git configuration..."
     
-    # Link gitconfig
+    # Link main gitconfig
     ln -sf "${PWD}/configs/git/.gitconfig" "${HOME}/.gitconfig"
+    
+    # Link personal and work configs
+    ln -sf "${PWD}/configs/git/.gitconfig-personal" "${HOME}/.gitconfig-personal"
+    ln -sf "${PWD}/configs/git/.gitconfig-work" "${HOME}/.gitconfig-work"
     
     # Link git message template
     ln -sf "${PWD}/configs/git/.gitmessage" "${HOME}/.gitmessage"
@@ -43,6 +47,8 @@ setup_git_config() {
     cp -r "${PWD}/configs/git/.git-templates" "${HOME}/"
     
     log "Git configuration linked successfully"
+    log "Personal git config will be used in ~/Projects/PERSONAL/"
+    log "Work git config will be used in ~/Projects/WORK/"
 }
 
 # Main function
