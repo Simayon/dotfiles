@@ -1,0 +1,2 @@
+# Ignore work-specific git config
+configs/git/.gitconfig-work
