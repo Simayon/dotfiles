@@ -26,8 +26,8 @@ check_dependencies() {
 
 # Initialize and update submodule
 update_submodule() {
-    log "Updating dot-neovim submodule..."
-    git submodule update --init --recursive dot-neovim
+    log "Updating Neovim configuration submodule..."
+    git submodule update --init --recursive configs/nvim
 }
 
 # Setup Neovim configuration
@@ -42,8 +42,8 @@ setup_neovim_config() {
         rm -rf "${HOME}/.config/nvim"
     fi
     
-    # Create symbolic link to the dot-neovim directory
-    ln -sf "${PWD}/dot-neovim" "${HOME}/.config/nvim"
+    # Create symbolic link to the nvim config directory
+    ln -sf "${PWD}/configs/nvim" "${HOME}/.config/nvim"
     
     log "Neovim configuration linked successfully"
 }
