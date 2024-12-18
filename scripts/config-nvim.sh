@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Neovim Setup Script
-# Links Neovim configuration from dot-neovim submodule
+# Links Neovim configuration from configs/nvim directory
 
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
@@ -19,11 +19,9 @@ error() {
 
 # Check for required dependencies
 check_dependencies() {
-    for cmd in git nvim; do
-        if ! command -v "$cmd" &> /dev/null; then
-            error "$cmd is not installed. Please install it first."
-        fi
-    done
+    if ! command -v nvim &> /dev/null; then
+        error "neovim is not installed. Please install it first."
+    fi
 }
 
 # Initialize and update submodule
@@ -44,19 +42,17 @@ setup_neovim_config() {
         rm -rf "${HOME}/.config/nvim"
     fi
     
-    # Create symbolic link to the entire dot-neovim directory
+    # Create symbolic link to the dot-neovim directory
     ln -sf "${PWD}/dot-neovim" "${HOME}/.config/nvim"
     
     log "Neovim configuration linked successfully"
 }
 
-# Main execution
+# Main function
 main() {
-    log "Starting Neovim setup..."
     check_dependencies
     update_submodule
     setup_neovim_config
-    log "Neovim setup completed successfully!"
 }
 
 # Run the main function

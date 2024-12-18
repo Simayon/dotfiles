@@ -2,31 +2,65 @@
 
 This repository contains my personal dotfiles configuration for a consistent development environment across different machines.
 
+## Directory Structure
+```
+.
+├── configs/           # All configuration files
+│   ├── git/          # Git configuration
+│   ├── nvim/         # Neovim configuration
+│   └── tmux/         # Tmux configuration
+├── scripts/          # Setup and installation scripts
+├── Makefile          # Installation automation
+└── README.md         # This file
+```
+
 ## Configurations
 
+### Git Configuration
+- Location: `configs/git/`
+- Custom git configuration with delta integration
+- Commit message template and hooks
+
 ### Tmux Configuration
-- Location: `.tmux.conf`
+- Location: `configs/tmux/`
 - Custom key bindings and settings for enhanced terminal multiplexing
 - Optimized for productivity and ease of use
 
 ### Neovim Configuration
-- Location: `dot-neovim/` (submodule)
+- Location: `configs/nvim/` (symlinked from dot-neovim submodule)
 - Complete Neovim setup with custom plugins and keymaps
-- For detailed information about the Neovim configuration, see the [dot-neovim](./dot-neovim) directory
+- For detailed information, see the [dot-neovim](./dot-neovim) directory
+
+## Dependencies
+- git
+- neovim (>= 0.9.0)
+- tmux (>= 3.0)
+- delta (for git diff)
 
 ## Installation
 
 1. Clone this repository:
    ```bash
-   git clone --recursive https://github.com/Simayon/my-dotfiles.git
+   git clone --recursive https://github.com/Simayon/dotfiles.git
+   cd dotfiles
    ```
 
-2. Set up symlinks:
+2. Install all configurations:
    ```bash
-   ln -s ~/my-dotfiles/.tmux.conf ~/.tmux.conf
+   make all
    ```
 
-3. For Neovim configuration, follow the setup instructions in the dot-neovim directory.
+   Or install individual components:
+   ```bash
+   make git-setup    # Only git configuration
+   make nvim-setup   # Only neovim configuration
+   make tmux-setup   # Only tmux configuration
+   ```
+
+3. To remove configurations:
+   ```bash
+   make clean
+   ```
 
 ## Updating
 
