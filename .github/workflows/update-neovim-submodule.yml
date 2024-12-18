@@ -28,7 +28,7 @@ jobs:
           git submodule update
 
           # Go to submodule directory and fetch latest changes
-          cd dot-neovim
+          cd configs/nvim
           git fetch origin
           SUBMODULE_DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
           CURRENT_SHA=$(git rev-parse HEAD)
@@ -43,13 +43,13 @@ jobs:
 
           if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
             cd ..
-            git submodule update --remote dot-neovim
-            git add dot-neovim
+            git submodule update --remote configs/nvim
+            git add configs/nvim
             # Capture the commit information from the submodule
-            SUBMODULE_SHORT_SHA=$(cd dot-neovim && git rev-parse --short HEAD)
-            SUBMODULE_FULL_SHA=$(cd dot-neovim && git rev-parse HEAD)
-            REPO_URL=$(cd dot-neovim && git config --get remote.origin.url | sed 's/\.git$//' | sed 's|git@github.com:|https://github.com/|')
-            LATEST_COMMIT_MESSAGE=$(cd dot-neovim && git log -1 --pretty=%B --oneline)
+            SUBMODULE_SHORT_SHA=$(cd configs/nvim && git rev-parse --short HEAD)
+            SUBMODULE_FULL_SHA=$(cd configs/nvim && git rev-parse HEAD)
+            REPO_URL=$(cd configs/nvim && git config --get remote.origin.url | sed 's/\.git$//' | sed 's|git@github.com:|https://github.com/|')
+            LATEST_COMMIT_MESSAGE=$(cd configs/nvim && git log -1 --pretty=%B --oneline)
 
             # Commit with the new message
             git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}
@@ -62,4 +62,3 @@ jobs:
           else
             echo "Submodule is already up to date"
           fi
-
