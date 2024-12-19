@@ -44,7 +44,7 @@ jobs:
 
           # Fetch and display the Git log
           echo "Fetching git log for the submodule..."
-          GIT_LOG=$(git log --oneline -n 10)
+          GIT_LOG=$(git log -n 10)
 
           if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
             cd ..
@@ -54,7 +54,7 @@ jobs:
             SUBMODULE_SHORT_SHA=$(cd configs/nvim && git rev-parse --short HEAD)
             SUBMODULE_FULL_SHA=$(cd configs/nvim && git rev-parse HEAD)
             REPO_URL=$(cd configs/nvim && git config --get remote.origin.url | sed 's/\.git$//' | sed 's|git@github.com:|https://github.com/|')
-            LATEST_COMMIT_MESSAGE=$(cd configs/nvim && git log -1 --pretty=%B --oneline)
+            LATEST_COMMIT_MESSAGE=$(cd configs/nvim && git log -1 --pretty=%B)
 
             # Commit with the new message
             git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}
