@@ -32,10 +32,27 @@ This repository contains my personal dotfiles configuration for a consistent dev
 - For detailed information, see the [dot-neovim](./dot-neovim) directory
 
 ## Dependencies
+
+This dotfiles repository requires several dependencies:
+
+### Core Dependencies
 - git
-- neovim (>= 0.9.0)
-- tmux (>= 3.0)
-- delta (for git diff)
+- neovim
+- cmatrix
+- npm (for additional tools)
+
+### Additional Tools
+- markdownlint-cli (for markdown linting in Neovim)
+
+Install core dependencies on Ubuntu/Debian:
+```bash
+sudo apt install git neovim cmatrix npm
+```
+
+Install additional tools:
+```bash
+npm install -g markdownlint-cli
+```
 
 ## Installation
 

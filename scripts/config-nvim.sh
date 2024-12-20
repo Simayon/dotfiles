@@ -22,6 +22,9 @@ check_dependencies() {
     if ! command -v nvim &> /dev/null; then
         error "neovim is not installed. Please install it first."
     fi
+    if ! command -v cmatrix &> /dev/null; then
+        error "cmatrix is not installed. Please install it first."
+    fi
 }
 
 # Initialize and update submodule
