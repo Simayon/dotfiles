@@ -1,13 +1,14 @@
 name: Update Neovim Submodule
+
 on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
   push:
-    branches:
-      - main
     paths:
       - 'configs/nvim/**'
   repository_dispatch:
     types: [neovim-updated]
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   update-submodule:
@@ -18,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
           fetch-depth: 0
 
       - name: Git config
@@ -26,44 +27,46 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Check and update submodule
+      - name: Update submodule
+        env:
+          TARGET_SHA: ${{ github.event.client_payload.sha }}
+          COMMIT_MSG: ${{ github.event.client_payload.message }}
+          SHORT_SHA: ${{ github.event.client_payload.short_sha }}
         run: |
-          # Initialize and update the submodule
-          git submodule init
-          git submodule update
-
-          # Go to submodule directory and fetch latest changes
+          # Initialize submodules
+          git submodule update --init --recursive
+          
           cd configs/nvim
-          git fetch origin
-          SUBMODULE_DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-          CURRENT_SHA=$(git rev-parse HEAD)
-          LATEST_SHA=$(git rev-parse origin/$SUBMODULE_DEFAULT_BRANCH)
-
-          echo "Current submodule SHA: $CURRENT_SHA"
-          echo "Latest submodule SHA: $LATEST_SHA"
-
-          # Fetch and display the Git log
-          echo "Fetching git log for the submodule..."
-          GIT_LOG=$(git log -n 10)
-
-          if [ "$CURRENT_SHA" != "$LATEST_SHA" ]; then
-            cd ..
-            git submodule update --remote configs/nvim
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+          
+          if [ "${{ github.event_name }}" == "repository_dispatch" ] && [ ! -z "$TARGET_SHA" ]; then
+            # Update to the specific commit from the dispatch event
+            git fetch origin $TARGET_SHA
+            git checkout $TARGET_SHA
+            NEW_COMMIT=$TARGET_SHA
+            COMMIT_MESSAGE="$COMMIT_MSG"
+            COMMIT_SHORT="$SHORT_SHA"
+          else
+            # Regular update to latest main
+            git fetch origin main
+            git checkout origin/main
+            NEW_COMMIT=$(git rev-parse HEAD)
+            COMMIT_MESSAGE=$(git log --format=%B -n 1 $NEW_COMMIT)
+            COMMIT_SHORT=$(git rev-parse --short $NEW_COMMIT)
+          fi
+          
+          if [ "$CURRENT_COMMIT" != "$NEW_COMMIT" ]; then
+            cd ../..
             git add configs/nvim
-            # Capture the commit information from the submodule
-            SUBMODULE_SHORT_SHA=$(cd configs/nvim && git rev-parse --short HEAD)
-            SUBMODULE_FULL_SHA=$(cd configs/nvim && git rev-parse HEAD)
-            REPO_URL=$(cd configs/nvim && git config --get remote.origin.url | sed 's/\.git$//' | sed 's|git@github.com:|https://github.com/|')
-            LATEST_COMMIT_MESSAGE=$(cd configs/nvim && git log -1 --pretty=%B)
+            git commit -m "chore(nvim): update submodule to ${COMMIT_SHORT}
 
-            # Commit with the new message
-            git commit -m "chore(neovim): update submodule to ${SUBMODULE_SHORT_SHA}
-
-            Triggered by commit:
-            ${LATEST_COMMIT_MESSAGE}
+            Original commit message:
+            ${COMMIT_MESSAGE}
             
-            View changes: ${REPO_URL}/commit/${SUBMODULE_FULL_SHA}"
+            Link to changes: https://github.com/Simayon/neovim-dotfiles/commit/${NEW_COMMIT}"
+            
+            echo "Pushing changes..."
             git push
           else
-            echo "Submodule is already up to date"
+            echo "No updates needed - submodule is at latest commit"
           fi
