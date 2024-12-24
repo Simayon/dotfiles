@@ -8,6 +8,8 @@
 ![Tmux](https://img.shields.io/badge/tmux-1BB91F?style=for-the-badge&logo=tmux&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
+<img src="https://github.com/Simayon/my-dotfiles/blob/master/static/working-person.gif" alt="Working Man" >
+
 > A meticulously crafted development environment that feels like home 🏡
 
 </div>
