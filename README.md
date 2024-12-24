@@ -6,9 +6,11 @@
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
 ![Tmux](https://img.shields.io/badge/tmux-1BB91F?style=for-the-badge&logo=tmux&logoColor=white)
+![i3](https://img.shields.io/badge/i3-222222?style=for-the-badge&logo=i3&logoColor=white)
+![Starship](https://img.shields.io/badge/starship-DD0B78?style=for-the-badge&logo=starship&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-<img src="https://github.com/Simayon/my-dotfiles/blob/master/static/working-person.gif" alt="Working Man" >
+<img src="https://github.com/Simayon/my-dotfiles/blob/master/static/working-person.gif" alt="Working Man" width="600" >
 
 > A meticulously crafted development environment that feels like home 🏡
 
@@ -28,6 +30,8 @@
   - Advanced Neovim configuration with LSP and plugins
   - Tmux setup for enhanced terminal workflow
   - Git configuration with delta integration
+  - i3 window manager for efficient workspace management
+  - Starship prompt for beautiful and informative shell
 
 - 🔄 **Version Controlled**
   - Git submodules for external dependencies
@@ -55,9 +59,13 @@
 │   ├── 📝 nvim/         Neovim configuration
 │   │   ├── init.lua     Entry point
 │   │   └── lua/         Modular configs
-│   └── 🖥️  tmux/         Tmux configuration
-│       ├── tmux.conf    Main config
-│       └── scripts/     Helper scripts
+│   ├── 🖥️  tmux/         Tmux configuration
+│   │   ├── tmux.conf    Main config
+│   │   └── scripts/     Helper scripts
+│   ├── 🪟 i3/           i3 window manager
+│   │   └── config       i3 configuration
+│   └── 🚀 starship/     Starship prompt
+│       └── starship.toml Configuration
 ├── 🛠️ scripts/          Setup scripts
 ├── 📋 Makefile          Installation automation
 └── 📘 README.md         Documentation
@@ -76,6 +84,8 @@
 - git >= 2.30.0
 - neovim >= 0.9.0
 - tmux >= 3.2
+- i3 >= 4.20
+- starship >= 1.14.0
 - make
 - npm >= 7.0.0
 
@@ -108,6 +118,8 @@
    make git-setup    # Git configuration
    make nvim-setup   # Neovim setup
    make tmux-setup   # Tmux configuration
+   make i3-setup     # i3 window manager
+   make starship-setup # Starship prompt
    ```
 
 3. **Verify Installation**
@@ -130,6 +142,8 @@ make update
 # Update specific components
 make update-nvim
 make update-tmux
+make update-i3
+make update-starship
 ```
 
 </details>
@@ -156,6 +170,16 @@ make update-tmux
 - Status line customization
 - Session management
 - [Learn more](./configs/tmux/README.md)
+
+### 🪟 i3 Window Manager
+- Efficient workspace management
+- Custom key bindings
+- [Learn more](./configs/i3/README.md)
+
+### 🚀 Starship Prompt
+- Beautiful and informative shell
+- Customizable configuration
+- [Learn more](./configs/starship/README.md)
 
 </details>
 
