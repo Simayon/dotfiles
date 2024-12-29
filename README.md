@@ -8,6 +8,7 @@
 ![Tmux](https://img.shields.io/badge/tmux-1BB91F?style=for-the-badge&logo=tmux&logoColor=white)
 ![i3](https://img.shields.io/badge/i3-222222?style=for-the-badge&logo=i3&logoColor=white)
 ![Starship](https://img.shields.io/badge/starship-DD0B78?style=for-the-badge&logo=starship&logoColor=white)
+![Ghostty](https://img.shields.io/badge/ghostty-4D4D4D?style=for-the-badge&logo=terminal&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 <img src="https://github.com/Simayon/my-dotfiles/blob/master/static/working-person.gif" alt="Working Man" width="600" >
@@ -32,6 +33,7 @@
   - Git configuration with delta integration
   - i3 window manager for efficient workspace management
   - Starship prompt for beautiful and informative shell
+  - Ghostty terminal with Catppuccin theme integration
 
 - 🔄 **Version Controlled**
   - Git submodules for external dependencies

@@ -1,6 +1,6 @@
-.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship
+.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
 
-all: git-setup nvim-setup tmux-setup i3-setup starship-setup
+all: git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup
 
 git-setup:
 	@echo "Setting up Git configuration..."
@@ -27,6 +27,11 @@ starship-setup:
 	@chmod +x ./scripts/config-starship.sh
 	@./scripts/config-starship.sh
 
+ghostty-setup:
+	@echo "Setting up Ghostty configuration..."
+	@chmod +x ./scripts/config-ghostty.sh
+	@./scripts/config-ghostty.sh
+
 clean:
 	@echo "Cleaning up dotfiles symlinks..."
 	@rm -f ~/.gitconfig
@@ -34,6 +39,7 @@ clean:
 	@rm -f ~/.tmux.conf
 	@rm -f ~/.config/i3/config
 	@rm -f ~/.config/starship.toml
+	@rm -f ~/.config/ghostty/config
 
 test:
 	@echo "Running tests..."
@@ -50,7 +56,7 @@ update:
 	@git pull
 	@git submodule update --init --recursive
 
-sync-configs: sync-git sync-nvim sync-tmux sync-i3 sync-starship
+sync-configs: sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
 	@echo "All configurations synced!"
 
 sync-git:
@@ -78,14 +84,20 @@ sync-starship:
 	@chmod +x ./scripts/config-starship.sh
 	@./scripts/config-starship.sh
 
+sync-ghostty:
+	@echo "Syncing Ghostty configuration..."
+	@chmod +x ./scripts/config-ghostty.sh
+	@./scripts/config-ghostty.sh
+
 help:
 	@echo "Dotfiles Setup Targets:"
-	@echo "  all           : Setup complete system (git, neovim, tmux, i3, starship)"
+	@echo "  all           : Setup complete system (git, neovim, tmux, i3, starship, ghostty)"
 	@echo "  git-setup     : Setup git configuration"
 	@echo "  nvim-setup    : Install and configure Neovim"
 	@echo "  tmux-setup    : Install and configure Tmux"
 	@echo "  i3-setup      : Install and configure i3"
 	@echo "  starship-setup: Install and configure Starship"
+	@echo "  ghostty-setup : Install and configure Ghostty"
 	@echo "  clean         : Remove dotfile symlinks"
 	@echo "  test          : Run test suite"
 	@echo "  doctor        : Check system health"
@@ -96,4 +108,5 @@ help:
 	@echo "  sync-tmux     : Sync tmux configuration"
 	@echo "  sync-i3       : Sync i3 configuration"
 	@echo "  sync-starship : Sync starship configuration"
+	@echo "  sync-ghostty  : Sync ghostty configuration"
 	@echo "  help          : Show this help message"
