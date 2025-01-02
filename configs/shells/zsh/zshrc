@@ -1,0 +1,92 @@
+# Oh My Zsh Configuration
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="xiong-chiamiov-plus"
+
+# Plugins
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+)
+
+# Aliases
+alias vim=nvim
+alias cat='batcat'
+alias logout='pkill -KILL -u $USER'
+alias please=please
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias cdl=cd_ls
+alias mcd=mkdir_cd_dir
+alias ..='cd ..'
+alias ...='cd ../../'
+
+# Navigation Functions
+function cd_ls() {
+    cd "$1"
+    if [ $? -eq 0 ]; then
+        ls -A
+    fi
+}
+
+function mkdir_cd_dir() {
+    mkdir "$1"
+    cd "$1"
+}
+
+# Completion
+complete -F *cd*completion cdl
+*cd*completion() {
+    local dir_list
+    dir_list=$(compgen -d -- "$1")
+    COMPREPLY=($dir_list)
+}
+
+# Please Function
+function please() {
+    if [ -n "$HISTFILE" ] && [ "$HISTCMD" -gt 1 ]; then
+        local last_cmd=$(fc -ln -1 | sed 's/^[ ]*//g' | sed 's/^sudo //g')
+        if [[ "$last_cmd" == "please" ]]; then
+            echo "No previous command to execute!"
+            return 1
+        fi
+        \cat << "EOF"
+        _____  *    * *    * * *_
+        |  __ \| |  | | |  | | | | |
+        | |  | | |  | | |__| | | | |
+        | |  | | |  | |  __  | | | |
+        | |__| | |__| | |  | |_|_|_|
+        |_____/ \____/|_|  |_(_|_|_)
+        just this one time...
+EOF
+        sudo $last_cmd
+    else
+        echo "No previous command found in history!"
+    fi
+}
+
+# Git Repository Greeter
+last_repository=
+function check_directory_for_new_repository() {
+    current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+    if [ "$current_repository" ] && \
+       [ "$current_repository" != "$last_repository" ]; then
+        onefetch
+    fi
+    last_repository=$current_repository
+}
+
+# Override cd command
+function cd() {
+    builtin cd "$@"
+    check_directory_for_new_repository
+}
+
+# Initial repository check
+check_directory_for_new_repository
+
+# Source configurations
+source $ZSH/oh-my-zsh.sh
+source "$INTELLI_HOME/bin/intelli-shell.sh"
+eval "$(starship init zsh)"

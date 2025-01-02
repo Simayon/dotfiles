@@ -1,6 +1,6 @@
-.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
+.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
 
-all: git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup
+all: git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup
 
 git-setup:
 	@echo "Setting up Git configuration..."
@@ -31,6 +31,11 @@ ghostty-setup:
 	@echo "Setting up Ghostty configuration..."
 	@chmod +x ./scripts/config-ghostty.sh
 	@./scripts/config-ghostty.sh
+
+zsh-setup:
+	@echo "Setting up Zsh configuration..."
+	@chmod +x ./scripts/config-zsh.sh
+	@./scripts/config-zsh.sh
 
 clean:
 	@echo "Cleaning up dotfiles symlinks..."
@@ -98,6 +103,7 @@ help:
 	@echo "  i3-setup      : Install and configure i3"
 	@echo "  starship-setup: Install and configure Starship"
 	@echo "  ghostty-setup : Install and configure Ghostty"
+	@echo "  zsh-setup		 : Install and configure Zsh"
 	@echo "  clean         : Remove dotfile symlinks"
 	@echo "  test          : Run test suite"
 	@echo "  doctor        : Check system health"
