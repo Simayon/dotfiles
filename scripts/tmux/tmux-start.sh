@@ -186,7 +186,6 @@ function initialize_repo() {
     if [[ -d .git ]]; then
         echo -e "${CYAN}Fetching origin...${RESET}"
         git fetch origin || { echo -e "${RED}Failed to fetch origin${RESET}"; return 1; }
-        onefetch
     fi
 }
 
