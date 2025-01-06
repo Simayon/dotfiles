@@ -21,6 +21,7 @@ alias cdl=cd_ls
 alias mcd=mkdir_cd_dir
 alias ..='cd ..'
 alias ...='cd ../../'
+alias fadd='git add $(git status -s | cut -c4- | sed "s/\"//g" | fzf)'
 
 # Navigation Functions
 function cd_ls() {
