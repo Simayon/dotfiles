@@ -69,17 +69,20 @@
         fi \
     }; f"
 
-# Conditional includes based on directory
-[includeIf "gitdir:~/Projects/PERSONAL/"]
-    path = ~/.gitconfig-personal
+    fadd = "!git status -s | fzf --ansi --multi --preview 'git diff --color=always -- {-1}' --header 'Navigate with arrow keys | Tab to select files | Enter to confirm choices' | awk '{print $2}' | tee /dev/stderr | xargs git add"
 
-[includeIf "gitdir:~/Projects/WORK/"]
-    path = ~/.gitconfig-work
+
+# Use this to include a seperaat configuration file for google projects
+# [includeIf "gitdir:~/Projects/GOOGLE/"]
+#     path = ~/.gitconfig-google
 
 # Personal configuration
 [user]
     name = Simayon Thampi
     email = simayonthampi@gmail.com
+
+[includeIf "gitdir:~/Projects/WORK/"]
+    path = ~/.gitconfig-work
 
 [commit]
     template = ~/.gitmessage
