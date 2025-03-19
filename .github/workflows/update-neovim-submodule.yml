@@ -3,9 +3,6 @@ name: Update Neovim Submodule
 on:
   schedule:
     - cron: '0 0 * * *'  # Run daily at midnight
-  push:
-    paths:
-      - 'configs/nvim/**'
   repository_dispatch:
     types: [neovim-updated]
   workflow_dispatch:
@@ -40,8 +37,9 @@ jobs:
           CURRENT_COMMIT=$(git rev-parse HEAD)
           
           if [ "${{ github.event_name }}" == "repository_dispatch" ] && [ ! -z "$TARGET_SHA" ]; then
+            echo "Received repository dispatch event with target SHA: $TARGET_SHA"
             # Update to the specific commit from the dispatch event
-            git fetch origin $TARGET_SHA
+            git fetch origin
             git checkout $TARGET_SHA
             NEW_COMMIT=$TARGET_SHA
             COMMIT_MESSAGE="$COMMIT_MSG"
@@ -55,8 +53,12 @@ jobs:
             COMMIT_SHORT=$(git rev-parse --short $NEW_COMMIT)
           fi
           
+          echo "Current commit: $CURRENT_COMMIT"
+          echo "New commit: $NEW_COMMIT"
+          
           if [ "$CURRENT_COMMIT" != "$NEW_COMMIT" ]; then
             cd ../..
+            echo "Updating submodule reference in parent repository..."
             git add configs/nvim
             git commit -m "chore(nvim): update submodule to ${COMMIT_SHORT}
 
