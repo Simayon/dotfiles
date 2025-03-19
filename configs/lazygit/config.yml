@@ -112,7 +112,21 @@ customCommands:
     description: "Create new branch (with type)"
     context: "localBranches"
     loadingText: "Creating new branch..."
-    command: "git checkout -b {{.Form.BranchType}}/{{.Form.BranchName}}"
+    command: |
+      bash -c 'if [ -z "{{.Form.BranchName}}" ]; then
+        echo "Error: Branch name cannot be empty" >&2
+        exit 1
+      fi
+      
+      if [ "{{.Form.BranchType}}" = "" ]; then
+        PREFIX="{{.Form.CustomPrefix}}"
+        if [ -n "$PREFIX" ] && [[ ! "$PREFIX" =~ /$ ]]; then
+          PREFIX="$PREFIX/"
+        fi
+        git checkout -b "${PREFIX}{{.Form.BranchName}}"
+      else
+        git checkout -b "{{.Form.BranchType}}/{{.Form.BranchName}}"
+      fi'
     prompts:
       - type: 'menu'
         title: 'Select branch type'
@@ -127,6 +141,13 @@ customCommands:
           - value: 'hotfix'
             name: 'Hotfix Branch'
             description: 'For critical fixes that need immediate attention'
+          - value: ''
+            name: 'Custom Branch'
+            description: 'For custom branch types'
+      - type: 'input'
+        title: 'Enter custom prefix (optional):'
+        key: 'CustomPrefix'
+        whenPrompt: '{{ eq .Form.BranchType "" }}'
       - type: 'input'
         title: 'Enter branch name (without prefix):'
         key: 'BranchName'
