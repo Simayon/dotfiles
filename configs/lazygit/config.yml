@@ -1,55 +1,77 @@
+# LazyGit Configuration File
+# This file configures the behavior and appearance of LazyGit
+
 gui:
-  # Custom status panel format
+  # View type for the status panel - shows all branches and their logs
   statusPanelView: allBranchesLog
+  # Disable warning when rewriting commit messages in external editor
   skipRewordInEditorWarning: false
+  # Width of the side panel as a proportion of the total window (0.0-1.0)
   sidePanelWidth: 0.26
+  # Format for the status panel display
   statusFormat:
+    # Shows branch name, commits behind/ahead, repo name, working tree state, and username
     statusPanelFormat: "{{.BranchName}} ({{.NumCommitsBehind}}↓·{{.NumCommitsAhead}}↑) - {{.RepoName}} [{{.WorkingTreeState}}] {{.UserName}}"
+  # Theme configuration - using Catppuccin Mocha color scheme
   theme:
-    # Catppuccin Mocha theme
+    # Border color for the currently active panel
     activeBorderColor:
       - "#89b4fa" # Blue
       - bold
+    # Border color for inactive panels
     inactiveBorderColor:
       - "#cdd6f4" # Text
+    # Border color when in search mode
     searchingActiveBorderColor:
       - "#89dceb" # Sky
       - bold
+    # Color for text in options menus
     optionsTextColor:
       - "#89b4fa" # Blue
+    # Background color for the selected line in active panel
     selectedLineBgColor:
       - "#313244" # Surface0
+    # Background color for the selected line in inactive panels
     inactiveViewSelectedLineBgColor:
       - "#45475a" # Surface1
+    # Foreground color for cherry-picked commits
     cherryPickedCommitFgColor:
       - "#89b4fa" # Blue
+    # Background color for cherry-picked commits
     cherryPickedCommitBgColor:
       - "#89dceb" # Sky
+    # Foreground color for marked base commits
     markedBaseCommitFgColor:
       - "#89b4fa" # Blue
+    # Background color for marked base commits
     markedBaseCommitBgColor:
       - "#f9e2af" # Yellow
+    # Color for unstaged changes
     unstagedChangesColor:
       - "#f38ba8" # Red
+    # Default text color
     defaultFgColor:
       - "#cdd6f4" # Text
 
+  # Version of Nerd Fonts being used - affects which icons are displayed
   nerdFontsVersion: "3"
 
-  showRandomTip: true
-  showCommandLog: false
-  showBottomLine: false
+  # UI behavior settings
+  showRandomTip: true        # Show random tips when starting LazyGit
+  showCommandLog: false      # Hide the command log panel
+  showBottomLine: false      # Hide the bottom line
 
-  # Branch color patterns
+  # Branch color patterns - defines colors for different branch types using regex patterns
   branchColorPatterns:
-    '^master$': '#89b4fa' # Blue for master branch
-    '^develop$': '#f9e2af' # Yellow for develop branch
-    '^feature/': '#a6e3a1' # Green for feature branches
-    '^bugfix/': '#f38ba8' # Red for bugfix branches
-    '^hotfix/': '#fab387' # Orange for hotfix branches
+    '^master$': '#89b4fa'    # Blue for master branch
+    '^develop$': '#f9e2af'   # Yellow for develop branch
+    '^feature/': '#a6e3a1'   # Green for feature branches
+    '^bugfix/': '#f38ba8'    # Red for bugfix branches
+    '^hotfix/': '#fab387'    # Orange for hotfix branches
 
-  # Config relating to the spinner - cars and traffic lights animation
+  # Loading spinner configuration - custom animation with cars and traffic lights
   spinner:
+    # Animation frames that will be cycled through during loading operations
     frames:
       - "🚗       🚦 "
       - " 🚗      🚦 "
@@ -63,43 +85,50 @@ gui:
       - "       🚗🚧 "
       - "        🚗 "
       - "         🚗"
+    # Animation speed in milliseconds between frames
     rate: 60
 
-confirmOnQuit: true
-promptToReturnFromSubprocess: false
+# Global behavior settings
+confirmOnQuit: true                  # Show confirmation dialog when quitting
+promptToReturnFromSubprocess: false  # Don't prompt to return from subprocess
 
+# Custom keybindings - overrides default key mappings
 keybindings:
     files:
-        stashAllChanges: <disabled>
+        stashAllChanges: <disabled>  # Disable the default stash all changes keybinding
     branches:
-        createNewBranchWithName: 'b'
+        createNewBranchWithName: 'b' # Use 'b' to create a new branch with name
 
+# Custom commands section - defines additional commands and their keybindings
 customCommands:
+  # Smart push command that detects if in work or personal project and pushes accordingly
   - key: "P"
     command: 'bash -c "if [[ $(git rev-parse --show-toplevel) =~ ^$HOME/Projects/WORK ]]; then echo Pushing to Gerrit... && git push gerrit HEAD:refs/for/master; else echo Pushing to origin... && git push; fi"'
-    context: "localBranches"
+    context: "localBranches"      # This command is available in the branches view
     description: "Push (Normal or Gerrit based on directory)"
     loadingText: "Pushing Changes..."
     prompts:
-      - type: 'confirm'
+      - type: 'confirm'            # Show a confirmation dialog before executing
         title: 'Push Confirmation'
         body: 'Pushing Changes...'
 
+  # Smart pull command that detects if in work or personal project and pulls accordingly
   - key: "p"
     command: 'bash -c "if [[ $(git rev-parse --show-toplevel) =~ ^$HOME/Projects/WORK ]]; then git pull --rebase gerrit; else git pull --rebase origin; fi"'
-    context: "localBranches"
+    context: "localBranches"      # This command is available in the branches view
     description: "Pull (Rebase) from Gerrit or Origin based on directory"
     loadingText: "Pulling latest changes..."
 
+  # Interactive push command with menu to select the remote destination
   - key: "G"
     description: "Push (Gerrit or Origin)"
-    context: "localBranches"
+    context: "localBranches"      # This command is available in the branches view
     loadingText: "Pushing changes..."
     command: "git push {{.Form.Remote}} HEAD:refs/for/master"
     prompts:
-      - type: 'menu'
+      - type: 'menu'               # Show a menu to select the remote
         title: 'Select Remote'
-        key: 'Remote'
+        key: 'Remote'              # Form variable that will be used in the command
         options:
           - value: 'gerrit'
             name: 'Push to Gerrit'
@@ -108,10 +137,12 @@ customCommands:
             name: 'Push to Origin'
             description: 'Push changes directly to the main repository'
 
+  # Advanced branch creation command with branch type selection
   - key: "B"
     description: "Create new branch (with type)"
-    context: "localBranches"
+    context: "localBranches"      # This command is available in the branches view
     loadingText: "Creating new branch..."
+    # Complex command with validation and conditional branch prefix handling
     command: |
       bash -c 'if [ -z "{{.Form.BranchName}}" ]; then
         echo "Error: Branch name cannot be empty" >&2
@@ -128,9 +159,10 @@ customCommands:
         git checkout -b "{{.Form.BranchType}}/{{.Form.BranchName}}"
       fi'
     prompts:
+      # Interactive menu for selecting branch type
       - type: 'menu'
         title: 'Select branch type'
-        key: 'BranchType'
+        key: 'BranchType'          # Form variable that will be used in the command
         options:
           - value: 'feature'
             name: 'Feature Branch'
@@ -144,39 +176,51 @@ customCommands:
           - value: ''
             name: 'Custom Branch'
             description: 'For custom branch types'
+      # Conditional prompt for custom prefix if custom branch type is selected
       - type: 'input'
         title: 'Enter custom prefix (optional):'
         key: 'CustomPrefix'
         whenPrompt: '{{ eq .Form.BranchType "" }}'
+      # Input for branch name
       - type: 'input'
         title: 'Enter branch name (without prefix):'
         key: 'BranchName'
 
+  # Utility command to open the current repository in the system file manager
   - key: "o"
-    command: "xdg-open ."
-    context: "global"
+    command: "xdg-open ."         # Uses xdg-open for Linux systems
+    context: "global"             # This command is available in all views
     description: "Open repository in file manager"
 
+  # Enhanced stash command that allows adding a descriptive message
   - key: "s"
     command: "git stash push -m '{{.Form.StashMessage}}'"
-    context: "files"
+    context: "files"             # This command is available in the files view
     description: "Stash changes with message"
     prompts:
-      - type: "input"
+      - type: "input"            # Prompt for stash message
         title: "Enter stash message:"
-        key: "StashMessage"
+        key: "StashMessage"      # Form variable that will be used in the command
     loadingText: "Stashing changes..."
 
+  # Custom git graph visualization command (Ctrl+G)
   - key: "<c-g>"
     command: "/home/simayon/.config/lazygit/git-pretty-graph"
-    context: "global"
+    context: "global"            # This command is available in all views
     description: "Show Git graph"
     loadingText: "Loading git graph..."
-    showOutput: true
-    streamOutput: true
-    scrollOutputDown: false
+    showOutput: true               # Display the command output in LazyGit
+    streamOutput: true             # Stream the output as it's generated
+    scrollOutputDown: false        # Don't automatically scroll down as output is generated
 
+# Git-specific configuration
 git:
+  # Configuration for paging git command output
   paging:
-    colorArg: always
+    colorArg: always              # Always use color in git output
+    # Use delta as the pager with specific formatting options
+    # - dark mode
+    # - no paging (LazyGit handles scrolling)
+    # - show line numbers
+    # - enable hyperlinks with custom format for opening files directly from LazyGit
     pager: delta --dark --paging=never --line-numbers  --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}{line}"
