@@ -1,2 +1,11 @@
 # Ignore work-specific git config
 configs/git/.gitconfig-work
+target/*
+
+# Cargo/Rust specific ignores
+/target/
+**/*.rs.bk
+*.pdb
+Cargo.lock
+.cargo-ok
+.cargo/

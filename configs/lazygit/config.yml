@@ -1,3 +1,79 @@
+gui:
+  # Custom status panel format
+  statusPanelView: allBranchesLog
+  skipRewordInEditorWarning: false
+  sidePanelWidth: 0.26
+  statusFormat:
+    statusPanelFormat: "{{.BranchName}} ({{.NumCommitsBehind}}↓·{{.NumCommitsAhead}}↑) - {{.RepoName}} [{{.WorkingTreeState}}] {{.UserName}}"
+  theme:
+    # Catppuccin Mocha theme
+    activeBorderColor:
+      - "#89b4fa" # Blue
+      - bold
+    inactiveBorderColor:
+      - "#cdd6f4" # Text
+    searchingActiveBorderColor:
+      - "#89dceb" # Sky
+      - bold
+    optionsTextColor:
+      - "#89b4fa" # Blue
+    selectedLineBgColor:
+      - "#313244" # Surface0
+    inactiveViewSelectedLineBgColor:
+      - "#45475a" # Surface1
+    cherryPickedCommitFgColor:
+      - "#89b4fa" # Blue
+    cherryPickedCommitBgColor:
+      - "#89dceb" # Sky
+    markedBaseCommitFgColor:
+      - "#89b4fa" # Blue
+    markedBaseCommitBgColor:
+      - "#f9e2af" # Yellow
+    unstagedChangesColor:
+      - "#f38ba8" # Red
+    defaultFgColor:
+      - "#cdd6f4" # Text
+
+  nerdFontsVersion: "3"
+
+  showRandomTip: true
+  showCommandLog: false
+  showBottomLine: false
+
+  # Branch color patterns
+  branchColorPatterns:
+    '^master$': '#89b4fa' # Blue for master branch
+    '^develop$': '#f9e2af' # Yellow for develop branch
+    '^feature/': '#a6e3a1' # Green for feature branches
+    '^bugfix/': '#f38ba8' # Red for bugfix branches
+    '^hotfix/': '#fab387' # Orange for hotfix branches
+
+  # Config relating to the spinner - cars and traffic lights animation
+  spinner:
+    frames:
+      - "🚗       🚦 "
+      - " 🚗      🚦 "
+      - "  🚗     🚦 "
+      - "   🚗    🚦 "
+      - "    🚗   🚦 "
+      - "     🚗  🚦 "
+      - "      🚗 🚦 "
+      - "       🚗🚦 "
+      - "       🚗🚥 "
+      - "       🚗🚧 "
+      - "        🚗 "
+      - "         🚗"
+    rate: 95
+
+confirmOnQuit: true
+promptToReturnFromSubprocess: false
+
+keybindings:
+    files:
+        stashAllChanges: <disabled>
+    branches:
+        createNewBranchWithName: 'b'
+
 customCommands:
   - key: "P"
     command: 'bash -c "if [[ $(git rev-parse --show-toplevel) =~ ^$HOME/Projects/WORK ]]; then echo Pushing to Gerrit... && git push gerrit HEAD:refs/for/master; else echo Pushing to origin... && git push; fi"'
@@ -31,6 +107,29 @@ customCommands:
           - value: 'origin'
             name: 'Push to Origin'
             description: 'Push changes directly to the main repository'
+
+  - key: "B"
+    description: "Create new branch (with type)"
+    context: "localBranches"
+    loadingText: "Creating new branch..."
+    command: "git checkout -b {{.Form.BranchType}}/{{.Form.BranchName}}"
+    prompts:
+      - type: 'menu'
+        title: 'Select branch type'
+        key: 'BranchType'
+        options:
+          - value: 'feature'
+            name: 'Feature Branch'
+            description: 'For new features and enhancements'
+          - value: 'bugfix'
+            name: 'Bugfix Branch'
+            description: 'For fixing bugs and issues'
+          - value: 'hotfix'
+            name: 'Hotfix Branch'
+            description: 'For critical fixes that need immediate attention'
+      - type: 'input'
+        title: 'Enter branch name (without prefix):'
+        key: 'BranchName'
 
   - key: "o"
     command: "xdg-open ."
