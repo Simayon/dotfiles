@@ -212,6 +212,18 @@ customCommands:
     showOutput: true               # Display the command output in LazyGit
     streamOutput: true             # Stream the output as it's generated
     scrollOutputDown: false        # Don't automatically scroll down as output is generated
+    
+  # Merge branch with custom commit message
+  - key: "M"
+    command: "git merge {{.SelectedLocalBranch.Name}} --no-ff -m '{{.Form.MergeMessage}}'"
+    context: "localBranches"      # This command is available in the branches view
+    description: "Merge branch with commit message"
+    loadingText: "Merging branch..."
+    prompts:
+      - type: 'input'            # Prompt for merge commit message
+        title: "Enter merge commit message:"
+        key: "MergeMessage"      # Form variable that will be used in the command
+        initialValue: "Merge branch '{{.SelectedLocalBranch.Name}}' into {{.CheckedOutBranch.Name}}"
 
 # Git-specific configuration
 git:
