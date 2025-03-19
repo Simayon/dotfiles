@@ -63,7 +63,7 @@ gui:
       - "       🚗🚧 "
       - "        🚗 "
       - "         🚗"
-    rate: 95
+    rate: 60
 
 confirmOnQuit: true
 promptToReturnFromSubprocess: false
