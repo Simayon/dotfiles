@@ -56,9 +56,3 @@ customCommands:
     streamOutput: true
     scrollOutputDown: false
 
-  - key: "M"
-    command: "git commit -m \"$(copilot suggest)\""
-    context: "files"
-    description: "AI-generated commit message"
-    loadingText: "Generating commit message..."
-
