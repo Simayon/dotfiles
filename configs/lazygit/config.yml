@@ -1,0 +1,64 @@
+customCommands:
+  - key: "P"
+    command: 'bash -c "if [[ $(git rev-parse --show-toplevel) =~ ^$HOME/Projects/WORK ]]; then echo Pushing to Gerrit... && git push gerrit HEAD:refs/for/master; else echo Pushing to origin... && git push; fi"'
+    context: "localBranches"
+    description: "Push (Normal or Gerrit based on directory)"
+    loadingText: "Pushing Changes..."
+    prompts:
+      - type: 'confirm'
+        title: 'Push Confirmation'
+        body: 'Pushing Changes...'
+
+  - key: "p"
+    command: 'bash -c "if [[ $(git rev-parse --show-toplevel) =~ ^$HOME/Projects/WORK ]]; then git pull --rebase gerrit; else git pull --rebase origin; fi"'
+    context: "localBranches"
+    description: "Pull (Rebase) from Gerrit or Origin based on directory"
+    loadingText: "Pulling latest changes..."
+
+  - key: "G"
+    description: "Push (Gerrit or Origin)"
+    context: "localBranches"
+    loadingText: "Pushing changes..."
+    command: "git push {{.Form.Remote}} HEAD:refs/for/master"
+    prompts:
+      - type: 'menu'
+        title: 'Select Remote'
+        key: 'Remote'
+        options:
+          - value: 'gerrit'
+            name: 'Push to Gerrit'
+            description: 'Push changes to Gerrit for code review'
+          - value: 'origin'
+            name: 'Push to Origin'
+            description: 'Push changes directly to the main repository'
+
+  - key: "o"
+    command: "xdg-open ."
+    context: "global"
+    description: "Open repository in file manager"
+
+  - key: "s"
+    command: "git stash push -m '{{.Form.StashMessage}}'"
+    context: "files"
+    description: "Stash changes with message"
+    prompts:
+      - type: "input"
+        title: "Enter stash message:"
+        key: "StashMessage"
+    loadingText: "Stashing changes..."
+
+  - key: "<c-g>"
+    command: "/home/simayon/.config/lazygit/git-pretty-graph"
+    context: "global"
+    description: "Show Git graph"
+    loadingText: "Loading git graph..."
+    showOutput: true
+    streamOutput: true
+    scrollOutputDown: false
+
+  - key: "M"
+    command: "git commit -m \"$(copilot suggest)\""
+    context: "files"
+    description: "AI-generated commit message"
+    loadingText: "Generating commit message..."
+

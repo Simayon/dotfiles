@@ -1,6 +1,6 @@
-.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
+.PHONY: all git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup lazygit-setup clean help test doctor update sync-configs sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty sync-lazygit
 
-all: git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup
+all: git-setup nvim-setup tmux-setup i3-setup starship-setup ghostty-setup zsh-setup lazygit-setup
 
 git-setup:
 	@echo "Setting up Git configuration..."
@@ -37,6 +37,11 @@ zsh-setup:
 	@chmod +x ./scripts/config-zsh.sh
 	@./scripts/config-zsh.sh
 
+lazygit-setup:
+	@echo "Setting up Lazygit configuration..."
+	@chmod +x ./scripts/config-lazygit.sh
+	@./scripts/config-lazygit.sh
+
 clean:
 	@echo "Cleaning up dotfiles symlinks..."
 	@rm -f ~/.gitconfig
@@ -45,6 +50,7 @@ clean:
 	@rm -f ~/.config/i3/config
 	@rm -f ~/.config/starship.toml
 	@rm -f ~/.config/ghostty/config
+	@rm -f ~/.config/lazygit/config.yml
 
 test:
 	@echo "Running tests..."
@@ -61,7 +67,7 @@ update:
 	@git pull
 	@git submodule update --init --recursive
 
-sync-configs: sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty
+sync-configs: sync-git sync-nvim sync-tmux sync-i3 sync-starship sync-ghostty sync-lazygit
 	@echo "All configurations synced!"
 
 sync-git:
@@ -93,6 +99,11 @@ sync-ghostty:
 	@echo "Syncing Ghostty configuration..."
 	@chmod +x ./scripts/config-ghostty.sh
 	@./scripts/config-ghostty.sh
+
+sync-lazygit:
+	@echo "Syncing Lazygit configuration..."
+	@chmod +x ./scripts/config-lazygit.sh
+	@./scripts/config-lazygit.sh
 
 help:
 	@echo "Dotfiles Setup Targets:"

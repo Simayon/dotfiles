@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+# Custom git graph script for lazygit
+# Enhanced git graph with more beautiful and informative commit messages
+
+# Print a decorative header
+echo -e "\033[1;36m╔════════════════════════════════════════════════════════════════╗\033[0m"
+echo -e "\033[1;36m║\033[0m \033[1;33m Git Repository Visualization \033[0m                          \033[1;36m║\033[0m"
+echo -e "\033[1;36m╠════════════════════════════════════════════════════════════════╣\033[0m"
+
+# Get current branch
+CURRENT_BRANCH=$(git branch --show-current)
+echo -e "\033[1;36m║\033[0m \033[1;32mCurrent Branch:\033[0m $CURRENT_BRANCH\033[0m"
+
+# Get repository info
+REPO_URL=$(git config --get remote.origin.url 2>/dev/null)
+if [ -n "$REPO_URL" ]; then
+  echo -e "\033[1;36m║\033[0m \033[1;32mRemote:\033[0m $REPO_URL\033[0m"
+fi
+
+# Get last commit info
+LAST_COMMIT=$(git log -1 --pretty=format:"%h - %s (%an, %ar)" 2>/dev/null)
+if [ -n "$LAST_COMMIT" ]; then
+  echo -e "\033[1;36m║\033[0m \033[1;32mLast Commit:\033[0m $LAST_COMMIT\033[0m"
+fi
+
+echo -e "\033[1;36m╠════════════════════════════════════════════════════════════════╣\033[0m"
+echo ""
+
+# Run the git log command with enhanced format
+git log --color=always --graph --abbrev-commit --decorate \
+    --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' \
+    --all -n 100
+
+# Print a decorative footer
+echo ""
+echo -e "\033[1;36m╚════════════════════════════════════════════════════════════════╝\033[0m"
