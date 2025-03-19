@@ -27,11 +27,12 @@
 # Aliases
 [alias]
     # Interactive log browser with preview
-    flog = !git log | fzf --ansi --no-sort \
-        --preview "echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % git show % --color=always" \
+    git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+    fzf --ansi --no-sort \
+        --preview "echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % git show % --color=always" \
         --preview-window=right:50%:wrap --height 100% \
-        --bind "enter:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"git show % | nvim -c \\\"setlocal buftype=nofile bufhidden=wipe noswapfile nowrap\\\" -c \\\"nnoremap <buffer> q :q!<CR>\"\")" \
-        --bind "ctrl-e:execute(echo {} | grep -o \"[a-f0-9]\\{7\\}\" | head -1 | xargs -I % sh -c \"gh browse %\")"
+        --bind "enter:execute(echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show % | nvim -c \"setlocal buftype=nofile bufhidden=wipe noswapfile nowrap\" -c \"nnoremap <buffer> q :q!<CR>\"')" \
+        --bind "ctrl-e:execute(echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'gh browse %')"
 
     # Pretty log output
     ol = log --pretty="%C(white dim)%ad %C(reset)%C(Cyan)(%cd)%C(Green)(%cr)%C(reset)%x09 %C(red)%an%C(auto), %C(white dim)%cn%C(auto): %C(reset)%C(Yellow)%h %C(white)%s %C(auto)%d%C(reset)" --graph --decorate --date=local
@@ -81,8 +82,8 @@
     name = Simayon Thampi
     email = simayonthampi@gmail.com
 
-[includeIf "gitdir:~/Projects/WORK/"]
-    path = ~/.gitconfig-work
+[includeIf "gitdir:/home/simayon/Projects/WORK/"]
+    path = /home/simayon/.gitconfig-work
 
 [commit]
     template = ~/.gitmessage
