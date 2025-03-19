@@ -214,10 +214,19 @@ customCommands:
     scrollOutputDown: false        # Don't automatically scroll down as output is generated
     
   # Merge branch with custom commit message
-  - key: "M"
-    command: "git merge {{.SelectedLocalBranch.Name}} --no-ff -m '{{.Form.MergeMessage}}'"
+  - key: "<c-m>"
+    command: |
+      bash -c 'BRANCH="{{.SelectedLocalBranch.Name}}"
+      MESSAGE="{{.Form.MergeMessage}}"
+      
+      if [ -z "$BRANCH" ]; then
+        echo "Error: No branch selected" >&2
+        exit 1
+      fi
+      
+      git merge "$BRANCH" --no-ff -m "$MESSAGE" && echo "Successfully merged $BRANCH with custom message"'
     context: "localBranches"      # This command is available in the branches view
-    description: "Merge branch with commit message"
+    description: "Merge branch with custom message"
     loadingText: "Merging branch..."
     prompts:
       - type: 'input'            # Prompt for merge commit message
