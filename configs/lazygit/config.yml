@@ -124,7 +124,7 @@ customCommands:
     description: "Push to selected remote and branch"
     context: "localBranches"      # This command is available in the branches view
     loadingText: "Pushing changes..."
-    command: "git push {{.Form.Remote}} HEAD:{{.Form.LocalBranch}}"
+    command: "git push {{.Form.Remote}} HEAD:{{.Form.Branch}}"
     prompts:
       - type: 'menuFromCommand'    # Dynamically generate menu of remotes
         title: 'Select Remote'
@@ -140,6 +140,9 @@ customCommands:
         filter: '{{.Form.Remote}}/(?P<branch>[^ ]+)( HEAD)?'
         valueFormat: '{{ .branch }}'
         labelFormat: '{{ .branch | green }}'
+      - type: 'confirm'
+        title: 'Push to remote'
+        body: 'Are you sure you want to push to {{.Form.Remote}}:{{.Form.Branch}}?'
 
 
   # Advanced branch creation command with branch type selection
@@ -219,16 +222,16 @@ customCommands:
     scrollOutputDown: false        # Don't automatically scroll down as output is generated
 
   # Merge branch with custom commit message
-  - key: "<c-m>"
+  - key: "M"
     command: |
       bash -c 'BRANCH="{{.SelectedLocalBranch.Name}}"
       MESSAGE="{{.Form.MergeMessage}}"
-      
+
       if [ -z "$BRANCH" ]; then
         echo "Error: No branch selected" >&2
         exit 1
       fi
-      
+
       git merge "$BRANCH" --no-ff -m "$MESSAGE" && echo "Successfully merged $BRANCH with custom message"'
     context: "localBranches"      # This command is available in the branches view
     description: "Merge branch with custom message"
