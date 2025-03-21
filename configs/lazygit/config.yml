@@ -97,7 +97,7 @@ keybindings:
     files:
         stashAllChanges: <disabled>  # Disable the default stash all changes keybinding
     branches:
-        createNewBranchWithName: 'b' # Use 'b' to create a new branch with name
+        createNewBranchWithName: <disabled> # Disable default branch creation, using custom command instead
 
 # Custom commands section - defines additional commands and their keybindings
 customCommands:
@@ -145,7 +145,7 @@ customCommands:
   # Advanced branch creation command with branch type selection
   - key: "B"
     description: "Create new branch (with type)"
-    context: "localBranches"      # This command is available in the branches view
+    context: 'commits'      # This command is available in both branches and commits views
     loadingText: "Creating new branch..."
     # Complex command with validation and conditional branch prefix handling
     command: |
@@ -219,10 +219,19 @@ customCommands:
     scrollOutputDown: false        # Don't automatically scroll down as output is generated
 
   # Merge branch with custom commit message
-  - key: "M"
-    command: "git merge {{.SelectedLocalBranch.Name}} --no-ff -m '{{.Form.MergeMessage}}'"
+  - key: "<c-m>"
+    command: |
+      bash -c 'BRANCH="{{.SelectedLocalBranch.Name}}"
+      MESSAGE="{{.Form.MergeMessage}}"
+      
+      if [ -z "$BRANCH" ]; then
+        echo "Error: No branch selected" >&2
+        exit 1
+      fi
+      
+      git merge "$BRANCH" --no-ff -m "$MESSAGE" && echo "Successfully merged $BRANCH with custom message"'
     context: "localBranches"      # This command is available in the branches view
-    description: "Merge branch with commit message"
+    description: "Merge branch with custom message"
     loadingText: "Merging branch..."
     prompts:
       - type: 'input'            # Prompt for merge commit message
