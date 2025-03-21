@@ -97,7 +97,7 @@ keybindings:
     files:
         stashAllChanges: <disabled>  # Disable the default stash all changes keybinding
     branches:
-        createNewBranchWithName: 'b' # Use 'b' to create a new branch with name
+        createNewBranchWithName: <disabled> # Disable default branch creation, using custom command instead
 
 # Custom commands section - defines additional commands and their keybindings
 customCommands:
@@ -124,7 +124,7 @@ customCommands:
     description: "Push to selected remote and branch"
     context: "localBranches"      # This command is available in the branches view
     loadingText: "Pushing changes..."
-    command: "git push {{.Form.Remote}} HEAD:{{.Form.LocalBranch}}"
+    command: "git push {{.Form.Remote}} HEAD:{{.Form.Branch}}"
     prompts:
       - type: 'menuFromCommand'    # Dynamically generate menu of remotes
         title: 'Select Remote'
@@ -140,12 +140,15 @@ customCommands:
         filter: '{{.Form.Remote}}/(?P<branch>[^ ]+)( HEAD)?'
         valueFormat: '{{ .branch }}'
         labelFormat: '{{ .branch | green }}'
+      - type: 'confirm'
+        title: 'Push to remote'
+        body: 'Are you sure you want to push to {{.Form.Remote}}:{{.Form.Branch}}?'
 
 
   # Advanced branch creation command with branch type selection
   - key: "B"
     description: "Create new branch (with type)"
-    context: "localBranches"      # This command is available in the branches view
+    context: 'commits'      # This command is available in both branches and commits views
     loadingText: "Creating new branch..."
     # Complex command with validation and conditional branch prefix handling
     command: |
