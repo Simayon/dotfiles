@@ -23,6 +23,17 @@ alias ..='cd ..'
 alias ...='cd ../../'
 alias fadd='git add $(git status -s | cut -c4- | sed "s/\"//g" | fzf)'
 
+# Color support
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
 # Navigation Functions
 function cd_ls() {
     cd "$1"
@@ -37,12 +48,18 @@ function mkdir_cd_dir() {
 }
 
 # Completion
-complete -F *cd*completion cdl
-*cd*completion() {
-    local dir_list
-    dir_list=$(compgen -d -- "$1")
-    COMPREPLY=($dir_list)
-}
+# Note: The following completion is for bash, not zsh
+# Commented out to prevent errors
+# complete -F cd_completion cdl
+# cd_completion() {
+#     local dir_list
+#     dir_list=$(compgen -d -- "$1")
+#     COMPREPLY=($dir_list)
+# }
+
+# Enable zsh completion system
+autoload -Uz compinit
+compinit
 
 # Please Function
 function please() {
@@ -88,6 +105,21 @@ function cd() {
 check_directory_for_new_repository
 
 # Source configurations
-source $ZSH/oh-my-zsh.sh
-source "$INTELLI_HOME/bin/intelli-shell.sh"
-eval "$(starship init zsh)"
+# Check if Oh My Zsh exists before sourcing
+if [ -f "$ZSH/oh-my-zsh.sh" ]; then
+    source "$ZSH/oh-my-zsh.sh"
+fi
+
+# Check if intelli-shell exists before sourcing
+if [ -n "$INTELLI_HOME" ] && [ -f "$INTELLI_HOME/bin/intelli-shell.sh" ]; then
+    source "$INTELLI_HOME/bin/intelli-shell.sh"
+fi
+
+# Check if starship exists before initializing
+if command -v starship &> /dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+# Ensure colors are enabled for the terminal
+export CLICOLOR=1
+export LSCOLORS=ExGxBxDxCxEgEdxbxgxcxd
