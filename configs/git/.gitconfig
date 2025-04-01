@@ -27,7 +27,7 @@
 # Aliases
 [alias]
     # Interactive log browser with preview
-    fzlog = !sh -c 'git log --color=always --format=\"%C(auto)%h%d %s %C(black)%C(bold)%cr\" | fzf --ansi --no-sort --preview \"echo {} | grep -o \\\"[a-f0-9]\\{7\\}\\\" | head -1 | xargs -I % git show % --color=always\" --preview-window=right:50%:wrap'
+    logfzf = !sh -c 'git log --color=always --format=\"%C(auto)%h%d %s %C(black)%C(bold)%cr\" | fzf --ansi --no-sort --preview \"echo {} | grep -o [a-f0-9]\\{7\\} | head -1 | xargs -I % git show % --color=always\" --preview-window=right:50%:wrap'
 
     # Pretty log output
     ol = log --pretty="%C(white dim)%ad %C(reset)%C(Cyan)(%cd)%C(Green)(%cr)%C(reset)%x09 %C(red)%an%C(auto), %C(white dim)%cn%C(auto): %C(reset)%C(Yellow)%h %C(white)%s %C(auto)%d%C(reset)" --graph --decorate --date=local
@@ -67,8 +67,7 @@
 
     fadd = "!git status -s | fzf --ansi --multi --preview 'git diff --color=always -- {-1}' --header 'Navigate with arrow keys | Tab to select files | Enter to confirm choices' | awk '{print $2}' | tee /dev/stderr | xargs git add"
 
-
-# Use this to include a seperaat configuration file for google projects
+# Use this to include a separate configuration file for google projects
 # [includeIf "gitdir:~/Projects/GOOGLE/"]
 #     path = ~/.gitconfig-google
 

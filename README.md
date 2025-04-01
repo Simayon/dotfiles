@@ -95,7 +95,11 @@
 - delta (for git diffs)
 - cmatrix (for animations)
 - markdownlint-cli (for markdown)
-- ripgrep (for file search)
+
+**Required for Neovim:**
+- fzf (required for file searching)
+- ripgrep (required for file searching)
+- fd-find (required for file navigation)
 
 </details>
 
