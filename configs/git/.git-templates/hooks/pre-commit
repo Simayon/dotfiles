@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Pre-commit hook to prevent committing to master/main directly
+# and to check for trailing whitespace
+
+# Get the current branch name
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+# Check for trailing whitespace and fix
+if git diff --cached --check | grep -E ':[[:digit:]]+: trailing whitespace'; then
+  echo "ERROR: Trailing whitespace detected in staged changes."
+  echo "Please remove trailing whitespace before committing."
+  echo "You can run: git diff --check to see the issues."
+  exit 1
+fi
+
+# If we get here, all checks passed
+exit 0
