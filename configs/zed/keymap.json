@@ -1,0 +1,138 @@
+[
+	{
+		"context": "Workspace",
+		"bindings": {
+			// File navigation
+			"shift shift": "file_finder::Toggle",
+			"ctrl-p": "file_finder::Toggle",
+			"ctrl-e": "projects::OpenRecent",
+
+			// Git integrations
+			"ctrl-g ctrl-g": ["task::Spawn", { "task_name": "start lazygit" }],
+			"ctrl-g ctrl-s": "git_panel::ToggleFocus",
+			"ctrl-g ctrl-b": "git::Blame",
+
+			// Task shortcuts
+			"ctrl-shift-b": "task::Spawn",
+			"ctrl-shift-r": "task::Rerun",
+
+			// Terminal
+			"ctrl-shift-`": "workspace::NewTerminal",
+
+			// Panel toggles
+			"ctrl-b": "workspace::ToggleLeftDock",
+			"ctrl-j": "workspace::ToggleBottomDock",
+
+			// Outline & breadcrumbs
+			"ctrl-shift-o": "outline_panel::ToggleFocus",
+
+			// Project search
+			"ctrl-shift-f": "pane::DeploySearch"
+		}
+	},
+	{
+		"context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+		"bindings": {
+			// Leader key mappings (space as leader)
+			"space f f": "file_finder::Toggle",
+			"space f r": "projects::OpenRecent",
+			"space f s": "workspace::Save",
+			"space f a": "workspace::SaveAll",
+
+			// Git operations
+			"space g g": ["task::Spawn", { "task_name": "start lazygit" }],
+			"space g s": "git_panel::ToggleFocus",
+			"space g b": "git::Blame",
+			"space g h d": "editor::ToggleSelectedDiffHunks",
+			"space g h n": "editor::GoToHunk",
+			"space g h p": "editor::GoToPreviousHunk",
+
+			// LSP & code actions
+			"space c a": "editor::ToggleCodeActions",
+			"space c r": "editor::Rename",
+			"space c f": "editor::Format",
+			"space c d": "editor::GoToDefinition",
+			"space c D": "editor::GoToTypeDefinition",
+			"space c i": "editor::GoToImplementation",
+			"space c h": "editor::Hover",
+
+			// Search
+			"space s s": "pane::DeploySearch",
+			"space s w": "pane::DeploySearch",
+			"space s r": "search::SelectNextMatch",
+
+			// Tasks
+			"space r r": "task::Rerun",
+			"space r s": "task::Spawn",
+			"space r t": ["task::Spawn", { "task_name": "run tests" }],
+			"space r b": ["task::Spawn", { "task_name": "build project" }],
+
+			// UI toggles
+			"space t i": "editor::ToggleInlayHints",
+			"space t w": "editor::ToggleSoftWrap",
+			"space t z": "workspace::ToggleCenteredLayout",
+
+			// Buffer navigation
+			"space b d": "pane::CloseActiveItem",
+			"space b n": "pane::ActivateNextItem",
+			"space b p": "pane::ActivatePreviousItem",
+
+			// AI assistant
+			"space a c": "assistant::InlineAssist",
+
+			// Diagnostics
+			"space d d": "diagnostics::Deploy",
+			"space d n": "editor::GoToDiagnostic",
+			"space d p": "editor::GoToPreviousDiagnostic",
+
+			// Markdown preview
+			"space m p": "markdown::OpenPreview",
+			"space m P": "markdown::OpenPreviewToTheSide",
+
+			// Go to file under cursor
+			"g f": "editor::OpenExcerpts"
+		}
+	},
+	{
+		"context": "Editor && vim_mode == visual && !VimWaiting && !menu",
+		"bindings": {
+			"space c a": "editor::ToggleCodeActions",
+			"space c f": "editor::Format"
+		}
+	},
+	{
+		"context": "Editor && vim_mode == insert",
+		"bindings": {
+			// "j k": "vim::NormalBefore" // Uncomment if you want jk to escape insert mode
+		}
+	},
+	{
+		"context": "Terminal",
+		"bindings": {
+			"ctrl-shift-c": "terminal::Copy",
+			"ctrl-shift-v": "terminal::Paste"
+		}
+	},
+	{
+		"context": "ProjectPanel && not_editing",
+		"bindings": {
+			"a": "project_panel::NewFile",
+			"A": "project_panel::NewDirectory",
+			"d": "project_panel::Delete",
+			"r": "project_panel::Rename",
+			"x": "project_panel::Cut",
+			"c": "project_panel::Copy",
+			"p": "project_panel::Paste",
+			"o": "project_panel::Open"
+		}
+	},
+	{
+		"context": "Dock",
+		"bindings": {
+			"ctrl-w h": "workspace::ActivatePaneLeft",
+			"ctrl-w l": "workspace::ActivatePaneRight",
+			"ctrl-w k": "workspace::ActivatePaneUp",
+			"ctrl-w j": "workspace::ActivatePaneDown"
+		}
+	}
+]
