@@ -16,10 +16,6 @@
 [merge]
     conflictStyle = zdiff3
 
-# Template settings
-[init]
-    templatedir = ~/.git-templates
-
 # Rebase settings
 [rebase]
     instructionFormat = (%an <%ae>) %s
