@@ -54,7 +54,8 @@
 		"use_new_terminal": true,
 		"reveal_target": "center",
 		"show_command": false,
-		"show_summary": true
+		"show_summary": true,
+		"hide": "on_success"
 	},
 	{
 		"label": "build project",
